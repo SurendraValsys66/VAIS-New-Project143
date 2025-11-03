@@ -213,215 +213,94 @@ export default function Settings() {
                         </div>
                       </CardTitle>
                     </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Profile Photo</Label>
-                      <div className="flex items-center space-x-4">
-                        <Avatar className="h-16 w-16">
-                          <AvatarImage
-                            src={profile.avatarUrl || undefined}
-                            alt={`${profile.firstName} ${profile.lastName}`}
-                          />
-                          <AvatarFallback className="bg-valasys-orange text-white">
-                            {profile.firstName.charAt(0)}
-                            {profile.lastName.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex items-center space-x-2">
-                          <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const reader = new FileReader();
-                                reader.onload = () => {
-                                  const dataUrl = reader.result as string;
-                                  setProfile((prev) => ({
-                                    ...prev,
-                                    avatarUrl: dataUrl,
-                                  }));
-                                };
-                                reader.readAsDataURL(file);
-                              }
-                            }}
-                          />
-                          <Button
-                            variant="outline"
-                            onClick={() => fileInputRef.current?.click()}
-                            className="border-valasys-orange text-valasys-orange hover:bg-valasys-orange hover:text-white"
-                          >
-                            <Upload className="w-4 h-4 mr-2" /> Upload Photo
-                          </Button>
-                          {profile.avatarUrl && (
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>Profile Photo</Label>
+                        <div className="flex items-center space-x-4">
+                          <Avatar className="h-16 w-16">
+                            <AvatarImage
+                              src={profile.avatarUrl || undefined}
+                              alt={`${profile.firstName} ${profile.lastName}`}
+                            />
+                            <AvatarFallback className="bg-valasys-orange text-white">
+                              {profile.firstName.charAt(0)}
+                              {profile.lastName.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex items-center space-x-2">
+                            <input
+                              ref={fileInputRef}
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    const dataUrl = reader.result as string;
+                                    setProfile((prev) => ({
+                                      ...prev,
+                                      avatarUrl: dataUrl,
+                                    }));
+                                  };
+                                  reader.readAsDataURL(file);
+                                }
+                              }}
+                            />
                             <Button
-                              variant="ghost"
-                              onClick={() =>
-                                setProfile({ ...profile, avatarUrl: null })
-                              }
+                              variant="outline"
+                              onClick={() => fileInputRef.current?.click()}
+                              className="border-valasys-orange text-valasys-orange hover:bg-valasys-orange hover:text-white"
                             >
-                              Remove
+                              <Upload className="w-4 h-4 mr-2" /> Upload Photo
                             </Button>
-                          )}
+                            {profile.avatarUrl && (
+                              <Button
+                                variant="ghost"
+                                onClick={() =>
+                                  setProfile({ ...profile, avatarUrl: null })
+                                }
+                              >
+                                Remove
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">
-                          First Name <span className="text-red-500">*</span>
-                        </Label>
-                        <Input
-                          id="firstName"
-                          placeholder="Enter first name"
-                          required
-                          aria-required="true"
-                          value={profile.firstName}
-                          onChange={(e) =>
-                            setProfile({
-                              ...profile,
-                              firstName: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">
-                          Last Name <span className="text-red-500">*</span>
-                        </Label>
-                        <Input
-                          id="lastName"
-                          placeholder="Enter last name"
-                          required
-                          aria-required="true"
-                          value={profile.lastName}
-                          onChange={(e) =>
-                            setProfile({ ...profile, lastName: e.target.value })
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="email">
-                          Business Email <span className="text-red-500">*</span>
-                        </Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="name@company.com"
-                          required
-                          aria-required="true"
-                          value={profile.email}
-                          onChange={(e) =>
-                            setProfile({ ...profile, email: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Input
-                          id="phone"
-                          placeholder="e.g. +1 555 123 4567"
-                          value={profile.phone}
-                          onChange={(e) =>
-                            setProfile({ ...profile, phone: e.target.value })
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="company">
-                          Company Name <span className="text-red-500">*</span>
-                        </Label>
-                        <Input
-                          id="company"
-                          placeholder="Your company name"
-                          required
-                          aria-required="true"
-                          value={profile.company}
-                          onChange={(e) =>
-                            setProfile({ ...profile, company: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="role">Job Title</Label>
-                        <Input
-                          id="role"
-                          placeholder="Your job title"
-                          value={profile.role}
-                          onChange={(e) =>
-                            setProfile({ ...profile, role: e.target.value })
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <Label htmlFor="location">Location</Label>
-                          <Input
-                            id="location"
-                            placeholder="City, Country"
-                            value={profile.location}
-                            onChange={(e) =>
-                              setProfile({
-                                ...profile,
-                                location: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="homeAddress">Home Address</Label>
-                          <Input
-                            id="homeAddress"
-                            placeholder="Street, City, State, ZIP"
-                            value={profile.homeAddress}
-                            onChange={(e) =>
-                              setProfile({
-                                ...profile,
-                                homeAddress: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="workAddress">Work Address</Label>
-                          <Input
-                            id="workAddress"
-                            placeholder="Company address"
-                            value={profile.workAddress}
-                            onChange={(e) =>
-                              setProfile({
-                                ...profile,
-                                workAddress: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="billingAddress">
-                            Billing Address
+                          <Label htmlFor="firstName">
+                            First Name <span className="text-red-500">*</span>
                           </Label>
                           <Input
-                            id="billingAddress"
-                            placeholder="Billing address"
-                            value={profile.billingAddress}
+                            id="firstName"
+                            placeholder="Enter first name"
+                            required
+                            aria-required="true"
+                            value={profile.firstName}
                             onChange={(e) =>
                               setProfile({
                                 ...profile,
-                                billingAddress: e.target.value,
+                                firstName: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="lastName">
+                            Last Name <span className="text-red-500">*</span>
+                          </Label>
+                          <Input
+                            id="lastName"
+                            placeholder="Enter last name"
+                            required
+                            aria-required="true"
+                            value={profile.lastName}
+                            onChange={(e) =>
+                              setProfile({
+                                ...profile,
+                                lastName: e.target.value,
                               })
                             }
                           />
@@ -430,46 +309,174 @@ export default function Settings() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <Label htmlFor="linkedInUrl">LinkedIn URL</Label>
+                          <Label htmlFor="email">
+                            Business Email{" "}
+                            <span className="text-red-500">*</span>
+                          </Label>
                           <Input
-                            id="linkedInUrl"
-                            type="url"
-                            placeholder="https://www.linkedin.com/in/username"
-                            value={profile.linkedInUrl}
+                            id="email"
+                            type="email"
+                            placeholder="name@company.com"
+                            required
+                            aria-required="true"
+                            value={profile.email}
+                            onChange={(e) =>
+                              setProfile({ ...profile, email: e.target.value })
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="phone">Phone Number</Label>
+                          <Input
+                            id="phone"
+                            placeholder="e.g. +1 555 123 4567"
+                            value={profile.phone}
+                            onChange={(e) =>
+                              setProfile({ ...profile, phone: e.target.value })
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="company">
+                            Company Name <span className="text-red-500">*</span>
+                          </Label>
+                          <Input
+                            id="company"
+                            placeholder="Your company name"
+                            required
+                            aria-required="true"
+                            value={profile.company}
                             onChange={(e) =>
                               setProfile({
                                 ...profile,
-                                linkedInUrl: e.target.value,
+                                company: e.target.value,
                               })
                             }
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="xUrl">X URL</Label>
+                          <Label htmlFor="role">Job Title</Label>
                           <Input
-                            id="xUrl"
-                            type="url"
-                            placeholder="https://x.com/username"
-                            value={profile.xUrl}
+                            id="role"
+                            placeholder="Your job title"
+                            value={profile.role}
                             onChange={(e) =>
-                              setProfile({ ...profile, xUrl: e.target.value })
+                              setProfile({ ...profile, role: e.target.value })
                             }
                           />
                         </div>
                       </div>
-                    </div>
 
-                    <div className="pt-6 flex justify-center">
-                      <Button
-                        onClick={handleSaveProfile}
-                        className="bg-gradient-to-r from-valasys-orange to-valasys-orange-light text-white shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valasys-orange/40 h-12 px-8 min-w-[220px]"
-                      >
-                        <Save className="w-4 h-4 mr-2" />
-                        Save Changes
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="location">Location</Label>
+                            <Input
+                              id="location"
+                              placeholder="City, Country"
+                              value={profile.location}
+                              onChange={(e) =>
+                                setProfile({
+                                  ...profile,
+                                  location: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="homeAddress">Home Address</Label>
+                            <Input
+                              id="homeAddress"
+                              placeholder="Street, City, State, ZIP"
+                              value={profile.homeAddress}
+                              onChange={(e) =>
+                                setProfile({
+                                  ...profile,
+                                  homeAddress: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="workAddress">Work Address</Label>
+                            <Input
+                              id="workAddress"
+                              placeholder="Company address"
+                              value={profile.workAddress}
+                              onChange={(e) =>
+                                setProfile({
+                                  ...profile,
+                                  workAddress: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="billingAddress">
+                              Billing Address
+                            </Label>
+                            <Input
+                              id="billingAddress"
+                              placeholder="Billing address"
+                              value={profile.billingAddress}
+                              onChange={(e) =>
+                                setProfile({
+                                  ...profile,
+                                  billingAddress: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="linkedInUrl">LinkedIn URL</Label>
+                            <Input
+                              id="linkedInUrl"
+                              type="url"
+                              placeholder="https://www.linkedin.com/in/username"
+                              value={profile.linkedInUrl}
+                              onChange={(e) =>
+                                setProfile({
+                                  ...profile,
+                                  linkedInUrl: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="xUrl">X URL</Label>
+                            <Input
+                              id="xUrl"
+                              type="url"
+                              placeholder="https://x.com/username"
+                              value={profile.xUrl}
+                              onChange={(e) =>
+                                setProfile({ ...profile, xUrl: e.target.value })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-6 flex justify-center">
+                        <Button
+                          onClick={handleSaveProfile}
+                          className="bg-gradient-to-r from-valasys-orange to-valasys-orange-light text-white shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valasys-orange/40 h-12 px-8 min-w-[220px]"
+                        >
+                          <Save className="w-4 h-4 mr-2" />
+                          Save Changes
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
 
