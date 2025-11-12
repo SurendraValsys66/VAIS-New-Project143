@@ -173,7 +173,11 @@ export default function AddToListDialog({
             Add to List
           </DialogTitle>
           <DialogDescription>
-            Add <span className="font-semibold text-gray-900">{prospectName}</span> to your saved lists
+            {isBulk ? (
+              <>Add <span className="font-semibold text-gray-900">{currentProspectIds.length} prospects</span> to your saved lists</>
+            ) : (
+              <>Add <span className="font-semibold text-gray-900">{prospectName}</span> to your saved lists</>
+            )}
           </DialogDescription>
         </DialogHeader>
 
