@@ -186,8 +186,8 @@ export default function AddToListDialog({
                     </div>
                   )}
 
-                  <ScrollArea className="h-64 border border-gray-200 rounded-lg bg-gray-50 pr-4">
-                    <div className="space-y-2 p-3">
+                  <ScrollArea className="h-64 border border-gray-200 rounded-lg bg-gray-50 add-to-list-scroll">
+                    <div className="space-y-2 p-3 pr-4">
                       {filteredLists.length > 0 ? (
                         filteredLists.map((list) => {
                         const isSelected = selectedListIds.has(list.id);
