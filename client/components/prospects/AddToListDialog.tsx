@@ -116,7 +116,19 @@ export default function AddToListDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        if (!newOpen) {
+          // Reset state when dialog closes
+          setSearchTerm("");
+          setShowCreateList(false);
+          setNewListName("");
+          setSelectedListIds(new Set());
+        }
+        onOpenChange(newOpen);
+      }}
+    >
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
