@@ -41,23 +41,38 @@ export default function CancelSubscriptionModal({
   planDetails,
   onConfirm,
 }: CancelSubscriptionModalProps) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState(userEmail);
   const [reason, setReason] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       await new Promise((r) => setTimeout(r, 500));
       onConfirm(email, reason);
-      setEmail(userEmail);
-      setReason("");
-      onOpenChange(false);
+      setShowSuccess(true);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleUpgrade = () => {
+    navigate("/subscription");
+    onOpenChange(false);
+    setShowSuccess(false);
+    setEmail(userEmail);
+    setReason("");
+  };
+
+  const handleClose = () => {
+    onOpenChange(false);
+    setShowSuccess(false);
+    setEmail(userEmail);
+    setReason("");
   };
 
   return (
