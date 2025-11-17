@@ -395,53 +395,36 @@ export default function CreateAccount() {
                     </button>
                   </div>
                 </div>
-                <div className="rounded-lg bg-valasys-orange/5 border border-valasys-orange/20 p-4">
-                  {agreementConfirmed ? (
-                    <div className="flex items-center space-x-3">
-                      <div className="p-1 rounded-full bg-valasys-green/10 border border-valasys-green/30">
-                        <CheckCircle className="h-5 w-5 text-valasys-green" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-semibold text-valasys-green">
-                          Agreement Confirmed
-                        </p>
-                        <p className="text-xs text-valasys-gray-600 mt-0.5">
-                          You have confirmed the Master Subscriber Agreement
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setAgreementModalOpen(true)}
-                        className="text-xs text-valasys-orange hover:text-valasys-orange-light underline font-medium"
-                      >
-                        Review Again
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      <p className="text-sm text-valasys-gray-700">
-                        <span className="font-semibold">
-                          Master Subscriber Agreement
-                        </span>
-                        <span
-                          aria-hidden="true"
-                          className="text-red-500 ml-1"
-                        >
-                          *
-                        </span>
-                      </p>
-                      <Button
-                        type="button"
-                        onClick={() => setAgreementModalOpen(true)}
-                        className="w-full bg-valasys-orange hover:bg-valasys-orange-light text-white font-medium transition-all duration-200"
-                      >
-                        Review & Confirm Agreement
-                      </Button>
-                      <p className="text-xs text-valasys-orange font-medium">
-                        Required: Please review the agreement to proceed
-                      </p>
-                    </div>
-                  )}
+                <div className="flex items-start space-x-3">
+                  <input
+                    type="checkbox"
+                    id="agreementCheck"
+                    checked={agreementConfirmed}
+                    disabled={true}
+                    className="mt-1 h-4 w-4 rounded border-valasys-gray-300 text-valasys-orange cursor-not-allowed"
+                  />
+                  <label
+                    htmlFor="agreementCheck"
+                    className="text-sm text-valasys-gray-700"
+                  >
+                    I agree to the{" "}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setAgreementModalOpen(true);
+                      }}
+                      className="text-valasys-orange hover:text-valasys-orange-light underline font-semibold"
+                    >
+                      Master Subscriber Agreement
+                    </button>
+                    <span
+                      aria-hidden="true"
+                      className="text-red-500 ml-1"
+                    >
+                      *
+                    </span>
+                  </label>
                 </div>
 
                 <div className="flex items-center justify-between">
