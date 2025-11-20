@@ -482,6 +482,7 @@ export default function Payments() {
   const [paymentMethodsList, setPaymentMethodsList] =
     useState<PaymentMethod[]>(paymentMethods);
   const [addPaymentDialogOpen, setAddPaymentDialogOpen] = useState(false);
+  const [editingMethod, setEditingMethod] = useState<PaymentMethod | undefined>();
 
   const uniqueTypes = useMemo(
     () => Array.from(new Set(rows.map((r) => r.type))).sort(),
