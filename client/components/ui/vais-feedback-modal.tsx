@@ -65,7 +65,7 @@ export function VAISFeedbackModal({
           </button>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-5">
           {/* Main Text */}
           <div className="space-y-3 text-center">
             <p className="text-lg font-bold text-gray-900 leading-relaxed">
