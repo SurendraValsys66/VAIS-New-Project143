@@ -3,7 +3,7 @@ import { ContentBlock } from "./types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Trash2, Copy } from "lucide-react";
 
 interface SettingsPanelProps {
   block: ContentBlock | null;
