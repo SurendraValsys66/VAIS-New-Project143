@@ -207,29 +207,42 @@ export const EmailBuilder: React.FC<EmailBuilderProps> = ({
             </div>
           ) : (
             <>
-              {/* Left Sidebar - Block Toolbar */}
-              <div className="w-64 bg-white border-r border-gray-200 overflow-y-auto flex flex-col">
-                <BlockToolbar onAddBlock={handleAddBlock} />
-                <div className="p-4 border-t border-gray-200 flex-1">
-                  <h3 className="font-semibold text-gray-900 mb-3">Blocks</h3>
-                  <div className="space-y-2 max-h-96 overflow-y-auto">
-                    {template.blocks.map((block, index) => (
-                      <div
-                        key={block.id}
-                        className={cn(
-                          "p-2 rounded cursor-pointer text-sm transition-all",
-                          selectedBlockId === block.id
-                            ? "bg-valasys-orange text-white ring-2 ring-valasys-orange"
-                            : "bg-gray-100 hover:bg-gray-200",
-                        )}
-                        onClick={() => setSelectedBlockId(block.id)}
-                      >
-                        {block.type.charAt(0).toUpperCase() +
-                          block.type.slice(1)}{" "}
-                        Block {index + 1}
-                      </div>
-                    ))}
-                  </div>
+              {/* Left Sidebar - Blocks Panel with Selected Blocks */}
+              <div className="flex flex-col w-64 bg-white border-r border-gray-200 overflow-hidden">
+                {/* Blocks/Sections/Saved Tabs */}
+                <div className="flex-1 overflow-hidden">
+                  <BlocksPanel onAddBlock={handleAddBlock} />
+                </div>
+
+                {/* Selected Blocks List */}
+                <div className="border-t border-gray-200 p-4 max-h-64 overflow-y-auto">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-sm">
+                    Template Blocks
+                  </h3>
+                  {template.blocks.length > 0 ? (
+                    <div className="space-y-2">
+                      {template.blocks.map((block, index) => (
+                        <div
+                          key={block.id}
+                          className={cn(
+                            "p-2 rounded cursor-pointer text-xs transition-all",
+                            selectedBlockId === block.id
+                              ? "bg-valasys-orange text-white ring-2 ring-valasys-orange"
+                              : "bg-gray-100 hover:bg-gray-200",
+                          )}
+                          onClick={() => setSelectedBlockId(block.id)}
+                        >
+                          {block.type.charAt(0).toUpperCase() +
+                            block.type.slice(1)}{" "}
+                          Block {index + 1}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-gray-500">
+                      No blocks added yet. Select from above.
+                    </p>
+                  )}
                 </div>
               </div>
 
