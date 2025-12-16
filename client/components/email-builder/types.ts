@@ -209,7 +209,13 @@ export interface FooterBlock {
   backgroundColor: string;
   textColor: string;
   fontSize: number;
+  fontWeight: "normal" | "bold";
   padding: number;
+  margin: number;
+  borderWidth: number;
+  borderColor: string;
+  borderRadius: number;
+  visibility: "all" | "desktop" | "mobile";
 }
 
 export interface SpacerBlock {
