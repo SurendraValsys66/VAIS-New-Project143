@@ -61,6 +61,95 @@ export function createImageBlock(src = ""): ImageBlock {
   };
 }
 
+export function createVideoBlock(src = ""): VideoBlock {
+  return {
+    type: "video",
+    id: generateId(),
+    src,
+    thumbnail: "",
+    width: 300,
+    height: 200,
+    alignment: "center",
+  };
+}
+
+export function createDynamicContentBlock(
+  fieldName = "field_name",
+): DynamicContentBlock {
+  return {
+    type: "dynamicContent",
+    id: generateId(),
+    fieldName,
+    placeholder: `[${fieldName}]`,
+    backgroundColor: "#f5f5f5",
+    padding: 12,
+  };
+}
+
+export function createLogoBlock(src = ""): LogoBlock {
+  return {
+    type: "logo",
+    id: generateId(),
+    src,
+    alt: "Logo",
+    width: 150,
+    height: 60,
+    alignment: "center",
+  };
+}
+
+export function createSocialBlock(): SocialBlock {
+  return {
+    type: "social",
+    id: generateId(),
+    platforms: [
+      { name: "Facebook", url: "#", icon: "facebook" },
+      { name: "Twitter", url: "#", icon: "twitter" },
+      { name: "LinkedIn", url: "#", icon: "linkedin" },
+    ],
+    alignment: "center",
+    size: "medium",
+  };
+}
+
+export function createHtmlBlock(content = ""): HtmlBlock {
+  return {
+    type: "html",
+    id: generateId(),
+    content,
+  };
+}
+
+export function createProductBlock(): ProductBlock {
+  return {
+    type: "product",
+    id: generateId(),
+    image: "",
+    title: "Product Name",
+    description: "Product description goes here",
+    price: "$99.99",
+    buttonText: "Buy Now",
+    buttonLink: "#",
+    alignment: "center",
+  };
+}
+
+export function createNavigationBlock(): NavigationBlock {
+  return {
+    type: "navigation",
+    id: generateId(),
+    items: [
+      { label: "Home", link: "#" },
+      { label: "Products", link: "#" },
+      { label: "About", link: "#" },
+      { label: "Contact", link: "#" },
+    ],
+    backgroundColor: "#333333",
+    textColor: "#ffffff",
+    alignment: "center",
+  };
+}
+
 export function createButtonBlock(text = "Click me"): ButtonBlock {
   return {
     type: "button",
