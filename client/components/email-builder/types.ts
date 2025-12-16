@@ -184,6 +184,8 @@ export interface DividerBlock {
   color: string;
   height: number;
   margin: number;
+  padding: number;
+  visibility: "all" | "desktop" | "mobile";
 }
 
 export interface HeaderBlock {
