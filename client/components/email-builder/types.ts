@@ -164,10 +164,18 @@ export interface SpacerBlock {
 }
 
 export type ContentBlock =
+  | TitleBlock
   | TextBlock
   | ImageBlock
+  | VideoBlock
   | ButtonBlock
+  | DynamicContentBlock
+  | LogoBlock
+  | SocialBlock
+  | HtmlBlock
   | DividerBlock
+  | ProductBlock
+  | NavigationBlock
   | HeaderBlock
   | FooterBlock
   | SpacerBlock;
