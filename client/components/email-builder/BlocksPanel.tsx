@@ -247,48 +247,6 @@ const SectionsPanel: React.FC<SectionsPanelProps> = ({ onAddBlock }) => {
       templates: contentTemplates,
     },
     {
-      title: "Text",
-      blocks: [
-        {
-          id: "title",
-          icon: <Type className="w-6 h-6 text-valasys-orange" />,
-          label: "Title",
-          description: "Large heading text",
-          onCreate: () => createTitleBlock(),
-        },
-        {
-          id: "text",
-          icon: <Type className="w-6 h-6 text-valasys-orange" />,
-          label: "Text",
-          description: "Body text content",
-          onCreate: () => createTextBlock(),
-        },
-      ],
-    },
-    {
-      title: "Images",
-      blocks: [
-        {
-          id: "image",
-          icon: <Image className="w-6 h-6 text-valasys-orange" />,
-          label: "Image",
-          description: "Image element",
-          onCreate: () => createImageBlock(),
-        },
-        {
-          id: "logo",
-          icon: (
-            <div className="w-6 h-6 text-valasys-orange border-2 border-current rounded px-1">
-              LOGO
-            </div>
-          ),
-          label: "Logo",
-          description: "Logo image",
-          onCreate: () => createLogoBlock(),
-        },
-      ],
-    },
-    {
       title: "Headers",
       blocks: [
         {
@@ -309,25 +267,6 @@ const SectionsPanel: React.FC<SectionsPanelProps> = ({ onAddBlock }) => {
           label: "Social",
           description: "Social media links",
           onCreate: () => createSocialBlock(),
-        },
-      ],
-    },
-    {
-      title: "Empty columns",
-      blocks: [
-        {
-          id: "spacer",
-          icon: <Plus className="w-6 h-6 text-valasys-orange" />,
-          label: "Spacer",
-          description: "Vertical space",
-          onCreate: () => createSpacerBlock(),
-        },
-        {
-          id: "divider",
-          icon: <Minus className="w-6 h-6 text-valasys-orange" />,
-          label: "Divider",
-          description: "Horizontal line",
-          onCreate: () => createDividerBlock(),
         },
       ],
     },
