@@ -320,7 +320,9 @@ export type ContentBlock =
   | NavigationBlock
   | HeaderBlock
   | FooterBlock
-  | SpacerBlock;
+  | SpacerBlock
+  | CenteredImageCardBlock
+  | SplitImageCardBlock;
 
 export interface EmailTemplate {
   id: string;
