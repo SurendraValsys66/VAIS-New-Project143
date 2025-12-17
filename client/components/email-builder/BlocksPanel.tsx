@@ -53,13 +53,19 @@ interface DraggableBlockProps {
 }
 
 const DraggableBlockButton: React.FC<DraggableBlockProps> = ({ block }) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: "block",
-    item: { block: block.onCreate() },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: "block",
+      item: () => {
+        // Create a new block each time drag starts, not once on mount
+        return { block: block.onCreate() };
+      },
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging(),
+      }),
     }),
-  }));
+    [block]
+  );
 
   return (
     <button
