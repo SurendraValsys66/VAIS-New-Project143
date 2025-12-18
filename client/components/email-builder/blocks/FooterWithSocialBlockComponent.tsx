@@ -119,16 +119,18 @@ export const FooterWithSocialBlockComponent: React.FC<
 
         {/* Address */}
         <div
-          className="cursor-pointer hover:bg-gray-50 rounded p-2"
-          onClick={() => setEditingField("address")}
+          className={`cursor-pointer hover:bg-gray-50 rounded p-2 transition-all ${
+            selectedElement === "address" ? "ring-2 ring-valasys-orange" : ""
+          }`}
+          onClick={() => onElementSelect?.("address")}
         >
-          {editingField === "address" ? (
+          {selectedElement === "address" ? (
             <textarea
               value={block.address.content}
               onChange={(e) =>
                 handleFieldChange("address", "content", e.target.value)
               }
-              onBlur={() => setEditingField(null)}
+              onBlur={() => onElementSelect?.(null)}
               autoFocus
               className="w-full border border-valasys-orange rounded px-2 py-1 text-center"
               style={{
