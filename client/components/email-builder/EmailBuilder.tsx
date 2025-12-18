@@ -241,7 +241,22 @@ export const EmailBuilder: React.FC<EmailBuilderProps> = ({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setPreviewMode(!previewMode)}
+                onClick={() => {
+                  setPreviewMode(false);
+                  setShowSourceCode(!showSourceCode);
+                }}
+                className={showSourceCode ? "bg-valasys-orange text-white" : ""}
+              >
+                <Code className="w-4 h-4 mr-1" />
+                {showSourceCode ? "Edit" : "View Source"}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setShowSourceCode(false);
+                  setPreviewMode(!previewMode);
+                }}
                 className={previewMode ? "bg-valasys-orange text-white" : ""}
               >
                 <Eye className="w-4 h-4 mr-1" />
