@@ -79,10 +79,12 @@ export const FooterWithSocialBlockComponent: React.FC<
 
         {/* Enterprise Name */}
         <div
-          className="cursor-pointer hover:bg-gray-50 rounded p-2"
-          onClick={() => setEditingField("enterpriseName")}
+          className={`cursor-pointer hover:bg-gray-50 rounded p-2 transition-all ${
+            selectedElement === "enterpriseName" ? "ring-2 ring-valasys-orange" : ""
+          }`}
+          onClick={() => onElementSelect?.("enterpriseName")}
         >
-          {editingField === "enterpriseName" ? (
+          {selectedElement === "enterpriseName" ? (
             <input
               type="text"
               value={block.enterpriseName.content}
