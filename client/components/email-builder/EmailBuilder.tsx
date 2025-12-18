@@ -312,8 +312,7 @@ export const EmailBuilder: React.FC<EmailBuilderProps> = ({
                       backgroundColor: color,
                     })
                   }
-                  onMoveBlockUp={handleMoveBlockUp}
-                  onMoveBlockDown={handleMoveBlockDown}
+                  onMoveBlock={handleMoveBlock}
                   onDuplicateBlock={handleDuplicateBlock}
                   onDeleteBlock={handleDeleteBlockById}
                 />
