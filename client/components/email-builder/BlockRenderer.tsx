@@ -33,8 +33,10 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({
   block,
   isSelected,
   isEditing,
+  selectedFooterElement,
   onBlockUpdate,
   onBlockSelect,
+  onFooterElementSelect,
 }) => {
   const handleClick = () => {
     onBlockSelect?.(block.id);
