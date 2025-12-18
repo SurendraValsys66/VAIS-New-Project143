@@ -168,6 +168,21 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({
           />
         </div>
       );
+    case "footer-with-social":
+      return (
+        <div onClick={handleClick}>
+          <FooterWithSocialBlockComponent
+            block={block as any}
+            isSelected={isSelected}
+            onContentChange={(field, value) =>
+              onBlockUpdate({ ...block, [field]: value })
+            }
+            onSocialUpdate={(social) =>
+              onBlockUpdate({ ...block, social })
+            }
+          />
+        </div>
+      );
     case "spacer":
       return (
         <div onClick={handleClick}>
