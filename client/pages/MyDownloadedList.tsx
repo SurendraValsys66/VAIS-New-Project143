@@ -1436,9 +1436,7 @@ export default function MyDownloadedList() {
                           <SelectItem key={c} value={c}>
                             {c === "hubspot"
                               ? "HubSpot"
-                              : c === "salesforce"
-                                ? "Salesforce"
-                                : "Marketo"}
+                              : "Salesforce"}
                           </SelectItem>
                         ))}
                       </SelectContent>
