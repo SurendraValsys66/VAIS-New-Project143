@@ -40,12 +40,12 @@ const sectionTemplates: SectionTemplate[] = [
           <div className="text-xs text-gray-600 mt-1">Internet canvas.</div>
         </div>
         <div className="flex gap-3">
-          <button className="px-4 py-2 bg-gray-900 text-white text-xs font-medium rounded">
+          <div className="px-4 py-2 bg-gray-900 text-white text-xs font-medium rounded pointer-events-none">
             Sign Up
-          </button>
-          <button className="px-4 py-2 bg-gray-100 text-gray-900 text-xs font-medium rounded">
+          </div>
+          <div className="px-4 py-2 bg-gray-100 text-gray-900 text-xs font-medium rounded pointer-events-none">
             Download
-          </button>
+          </div>
         </div>
       </div>
     ),
