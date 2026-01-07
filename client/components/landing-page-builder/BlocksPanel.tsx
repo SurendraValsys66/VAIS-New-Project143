@@ -39,62 +39,102 @@ export const BlocksPanel: React.FC<BlocksPanelProps> = ({ onAddBlock }) => {
 
   const sectionGroups: SectionGroup[] = [
     {
-      id: "sections",
-      label: "Sections",
+      id: "start",
+      label: "Start",
       items: [
         {
-          id: "header",
-          label: "Header",
+          id: "userguide",
+          label: "User Guide",
+          onCreate: createHeaderBlock,
+        },
+      ],
+      defaultExpanded: true,
+    },
+    {
+      id: "blocks",
+      label: "Blocks",
+      items: [
+        {
+          id: "sections",
+          label: "Sections",
           onCreate: createHeaderBlock,
         },
         {
-          id: "hero",
-          label: "Hero Section",
+          id: "navigation",
+          label: "Navigation",
+          onCreate: createHeaderBlock,
+        },
+        {
+          id: "menus",
+          label: "Menus",
+          onCreate: createHeaderBlock,
+        },
+      ],
+      defaultExpanded: true,
+    },
+    {
+      id: "cms",
+      label: "CMS",
+      items: [
+        {
+          id: "collections",
+          label: "Collections",
           onCreate: createHeroBlock,
         },
         {
-          id: "features",
-          label: "Features",
+          id: "fonts",
+          label: "Fonts",
           onCreate: createFeaturesBlock,
         },
       ],
       defaultExpanded: true,
     },
     {
-      id: "components",
-      label: "Components",
+      id: "elements",
+      label: "Elements",
       items: [
         {
-          id: "testimonials",
-          label: "Testimonials",
+          id: "icons",
+          label: "Icons",
           onCreate: createTestimonialsBlock,
         },
         {
-          id: "about",
-          label: "About",
+          id: "mobile",
+          label: "Mobile",
           onCreate: createAboutBlock,
         },
         {
-          id: "contact",
-          label: "Contact Form",
+          id: "forms",
+          label: "Forms",
           onCreate: createContactFormBlock,
+        },
+        {
+          id: "icons-more",
+          label: "Icons/More",
+          onCreate: createFooterBlock,
         },
       ],
       defaultExpanded: true,
     },
     {
-      id: "other",
-      label: "Other",
+      id: "social",
+      label: "Social",
       items: [
         {
-          id: "footer",
-          label: "Footer",
-          onCreate: createFooterBlock,
-        },
-        {
-          id: "spacer",
-          label: "Spacer",
+          id: "social-icons",
+          label: "Social Icons",
           onCreate: createSectionSpacerBlock,
+        },
+      ],
+    },
+    {
+      id: "drafts",
+      label: "Drafts",
+      items: [
+        {
+          id: "draft-pages",
+          label: "Draft Pages",
+          onCreate: createHeaderBlock,
         },
       ],
     },
