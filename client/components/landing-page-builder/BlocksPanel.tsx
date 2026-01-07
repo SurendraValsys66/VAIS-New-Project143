@@ -1,17 +1,7 @@
 import React, { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Type,
-  Image,
-  Grid,
-  MessageCircle,
-  Info,
-  Mail,
-  Copyright,
-  Minus,
-} from "lucide-react";
 import {
   createHeaderBlock,
   createHeroBlock,
@@ -28,159 +18,151 @@ interface BlocksPanelProps {
   onAddBlock: (block: LandingPageBlock) => void;
 }
 
-interface BlockTemplate {
+interface BlockItem {
   id: string;
-  icon: React.ReactNode;
   label: string;
-  description: string;
   onCreate: () => LandingPageBlock;
+}
+
+interface SectionGroup {
+  id: string;
+  label: string;
+  items: BlockItem[];
+  defaultExpanded?: boolean;
 }
 
 export const BlocksPanel: React.FC<BlocksPanelProps> = ({ onAddBlock }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(["sections", "components"]),
+  );
 
-  const blockTemplates: BlockTemplate[] = [
+  const sectionGroups: SectionGroup[] = [
     {
-      id: "header",
-      icon: <Type className="w-6 h-6 text-valasys-orange" />,
-      label: "Header",
-      description: "Navigation header with logo and menu",
-      onCreate: createHeaderBlock,
+      id: "sections",
+      label: "Sections",
+      items: [
+        {
+          id: "header",
+          label: "Header",
+          onCreate: createHeaderBlock,
+        },
+        {
+          id: "hero",
+          label: "Hero Section",
+          onCreate: createHeroBlock,
+        },
+        {
+          id: "features",
+          label: "Features",
+          onCreate: createFeaturesBlock,
+        },
+      ],
+      defaultExpanded: true,
     },
     {
-      id: "hero",
-      icon: <Image className="w-6 h-6 text-valasys-orange" />,
-      label: "Hero Section",
-      description: "Large banner with headline and CTA",
-      onCreate: createHeroBlock,
+      id: "components",
+      label: "Components",
+      items: [
+        {
+          id: "testimonials",
+          label: "Testimonials",
+          onCreate: createTestimonialsBlock,
+        },
+        {
+          id: "about",
+          label: "About",
+          onCreate: createAboutBlock,
+        },
+        {
+          id: "contact",
+          label: "Contact Form",
+          onCreate: createContactFormBlock,
+        },
+      ],
+      defaultExpanded: true,
     },
     {
-      id: "features",
-      icon: <Grid className="w-6 h-6 text-valasys-orange" />,
-      label: "Features",
-      description: "Showcase features in a grid layout",
-      onCreate: createFeaturesBlock,
-    },
-    {
-      id: "testimonials",
-      icon: <MessageCircle className="w-6 h-6 text-valasys-orange" />,
-      label: "Testimonials",
-      description: "Customer testimonials and reviews",
-      onCreate: createTestimonialsBlock,
-    },
-    {
-      id: "about",
-      icon: <Info className="w-6 h-6 text-valasys-orange" />,
-      label: "About",
-      description: "About company section",
-      onCreate: createAboutBlock,
-    },
-    {
-      id: "contact",
-      icon: <Mail className="w-6 h-6 text-valasys-orange" />,
-      label: "Contact Form",
-      description: "Email contact form",
-      onCreate: createContactFormBlock,
-    },
-    {
-      id: "footer",
-      icon: <Copyright className="w-6 h-6 text-valasys-orange" />,
-      label: "Footer",
-      description: "Footer with links and info",
-      onCreate: createFooterBlock,
-    },
-    {
-      id: "spacer",
-      icon: <Minus className="w-6 h-6 text-valasys-orange" />,
-      label: "Spacer",
-      description: "Add vertical spacing",
-      onCreate: createSectionSpacerBlock,
+      id: "other",
+      label: "Other",
+      items: [
+        {
+          id: "footer",
+          label: "Footer",
+          onCreate: createFooterBlock,
+        },
+        {
+          id: "spacer",
+          label: "Spacer",
+          onCreate: createSectionSpacerBlock,
+        },
+      ],
     },
   ];
 
-  const filteredBlocks = blockTemplates.filter(
-    (block) =>
-      block.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      block.description.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const toggleSection = (sectionId: string) => {
+    const newExpanded = new Set(expandedSections);
+    if (newExpanded.has(sectionId)) {
+      newExpanded.delete(sectionId);
+    } else {
+      newExpanded.add(sectionId);
+    }
+    setExpandedSections(newExpanded);
+  };
+
+  const filteredSections = sectionGroups
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) =>
+        item.label.toLowerCase().includes(searchQuery.toLowerCase()),
+      ),
+    }))
+    .filter((section) => section.items.length > 0 || searchQuery === "");
 
   return (
     <div className="flex flex-col bg-white w-full h-full overflow-hidden">
-      <Tabs
-        defaultValue="blocks"
-        className="flex flex-col h-full overflow-hidden"
-      >
-        <TabsList className="sticky top-0 z-20 flex w-full h-auto rounded-none border-b border-gray-200 bg-white p-0 flex-shrink-0">
-          <TabsTrigger
-            value="blocks"
-            className="flex-1 rounded-none px-4 py-3 text-gray-600 border-b-2 border-transparent data-[state=active]:border-valasys-orange data-[state=active]:text-gray-900 data-[state=active]:bg-white shadow-none"
-          >
-            Blocks
-          </TabsTrigger>
-          <TabsTrigger
-            value="templates"
-            className="flex-1 rounded-none px-4 py-3 text-gray-600 border-b-2 border-transparent data-[state=active]:border-valasys-orange data-[state=active]:text-gray-900 data-[state=active]:bg-white shadow-none"
-          >
-            Templates
-          </TabsTrigger>
-        </TabsList>
+      <div className="p-4 border-b border-gray-200 bg-white flex-shrink-0">
+        <Input
+          placeholder="Search blocks..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="text-sm"
+        />
+      </div>
 
-        <TabsContent
-          value="blocks"
-          className="flex flex-col m-0 flex-1 overflow-hidden"
-        >
-          <div className="p-4 border-b border-gray-200 bg-white flex-shrink-0">
-            <Input
-              placeholder="Search blocks..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-sm"
-            />
-          </div>
+      <div className="flex-1 overflow-y-auto">
+        <div className="py-2">
+          {filteredSections.map((section) => (
+            <div key={section.id} className="border-b border-gray-100 last:border-b-0">
+              <button
+                onClick={() => toggleSection(section.id)}
+                className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <span>{section.label}</span>
+                {expandedSections.has(section.id) ? (
+                  <ChevronDown className="w-4 h-4 text-gray-400" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                )}
+              </button>
 
-          <div className="p-4 overflow-y-auto flex-1">
-            <div className="space-y-3">
-              {filteredBlocks.map((block) => (
-                <Button
-                  key={block.id}
-                  onClick={() => onAddBlock(block.onCreate())}
-                  variant="outline"
-                  className="w-full justify-start h-auto py-3 px-4 flex-col items-start border border-gray-200 hover:border-valasys-orange hover:bg-orange-50"
-                >
-                  <div className="flex items-center w-full mb-2">
-                    <div className="mr-3">{block.icon}</div>
-                    <span className="font-medium text-gray-900">
-                      {block.label}
-                    </span>
-                  </div>
-                  <span className="text-xs text-gray-600 ml-9">
-                    {block.description}
-                  </span>
-                </Button>
-              ))}
+              {expandedSections.has(section.id) && (
+                <div className="px-2 py-2 bg-gray-50">
+                  {section.items.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => onAddBlock(item.onCreate())}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-white hover:text-valasys-orange rounded transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent
-          value="templates"
-          className="flex flex-col m-0 flex-1 overflow-hidden"
-        >
-          <div className="p-4 overflow-y-auto flex-1">
-            <div className="space-y-3">
-              <div className="p-4 rounded-lg border border-gray-200 bg-gray-50">
-                <h3 className="font-medium text-gray-900 mb-2">
-                  Landing Page Templates
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Pre-built landing page templates coming soon. For now, use
-                  individual blocks to create your page.
-                </p>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
