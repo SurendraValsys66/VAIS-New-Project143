@@ -299,7 +299,7 @@ export const BlocksPanel: React.FC<BlocksPanelProps> = ({ onAddBlock, onSelectBl
 
   const handleItemClick = (item: BlockItem) => {
     if (item.variants && item.variants.length > 0) {
-      setSelectedVariantGroup(item);
+      toggleItem(item.id);
     } else {
       onAddBlock(item.onCreate());
     }
@@ -307,7 +307,6 @@ export const BlocksPanel: React.FC<BlocksPanelProps> = ({ onAddBlock, onSelectBl
 
   const handleVariantClick = (variant: BlockVariant) => {
     onAddBlock(variant.onCreate());
-    setSelectedVariantGroup(null);
   };
 
   const filteredSections = sectionGroups
