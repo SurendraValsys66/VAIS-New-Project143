@@ -43,8 +43,7 @@ export const LandingPagePreview: React.FC<LandingPagePreviewProps> = ({
       block,
       isSelected,
       onSelect: () => onSelectBlock(block.id),
-      onUpdate: (props: Record<string, any>) =>
-        onUpdateBlock(block.id, props),
+      onUpdate: (props: Record<string, any>) => onUpdateBlock(block.id, props),
     };
 
     let blockContent;

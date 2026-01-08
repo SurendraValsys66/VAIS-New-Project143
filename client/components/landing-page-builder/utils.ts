@@ -240,17 +240,20 @@ export const createFaqBlock = (): LandingPageBlock => ({
       {
         id: "faq-1",
         question: "How do frames work?",
-        answer: "Frames are containers that help you organize and structure your designs. They work by grouping related elements together.",
+        answer:
+          "Frames are containers that help you organize and structure your designs. They work by grouping related elements together.",
       },
       {
         id: "faq-2",
         question: "How do code pages?",
-        answer: "Code pages allow you to write custom code for advanced functionality. You can add HTML, CSS, and JavaScript.",
+        answer:
+          "Code pages allow you to write custom code for advanced functionality. You can add HTML, CSS, and JavaScript.",
       },
       {
         id: "faq-3",
         question: "How do features work?",
-        answer: "Features are built-in functionalities that you can enable or disable based on your needs.",
+        answer:
+          "Features are built-in functionalities that you can enable or disable based on your needs.",
       },
     ],
   },
@@ -345,9 +348,7 @@ export const createPricingTemplate = (): LandingPageBlock[] => [
   createPricingBlock(),
 ];
 
-export const createFaqTemplate = (): LandingPageBlock[] => [
-  createFaqBlock(),
-];
+export const createFaqTemplate = (): LandingPageBlock[] => [createFaqBlock()];
 
 export const createSignupTemplate = (): LandingPageBlock[] => [
   createSignupBlock(),
@@ -386,7 +387,10 @@ export const deleteLandingPageFromLocalStorage = (id: string): void => {
   localStorage.setItem(LANDING_PAGES_STORAGE_KEY, JSON.stringify(filtered));
 };
 
-export const createNewLandingPage = (name: string, description: string): LandingPage => ({
+export const createNewLandingPage = (
+  name: string,
+  description: string,
+): LandingPage => ({
   id: `lp-${Date.now()}`,
   name,
   description,

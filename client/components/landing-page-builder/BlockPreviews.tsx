@@ -89,9 +89,7 @@ export const FeaturesBlockPreview: React.FC<BlockPreviewProps> = ({
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-2">
           {props.heading}
         </h2>
-        <p className="text-center text-gray-600 mb-12">
-          {props.description}
-        </p>
+        <p className="text-center text-gray-600 mb-12">{props.description}</p>
         <div
           className="gap-8"
           style={{
@@ -283,7 +281,9 @@ export const FooterBlockPreview: React.FC<BlockPreviewProps> = ({
           </div>
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
-            <p className="text-sm opacity-75 mb-2">{props.contactInfo?.email}</p>
+            <p className="text-sm opacity-75 mb-2">
+              {props.contactInfo?.email}
+            </p>
             <p className="text-sm opacity-75">{props.contactInfo?.phone}</p>
           </div>
         </div>
@@ -341,9 +341,7 @@ export const PricingBlockPreview: React.FC<BlockPreviewProps> = ({
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-2">
           {props.heading}
         </h2>
-        <p className="text-center text-gray-600 mb-12">
-          {props.subheading}
-        </p>
+        <p className="text-center text-gray-600 mb-12">{props.subheading}</p>
         <div className="grid grid-cols-3 gap-8">
           {props.pricingTiers?.map((tier: any) => (
             <div
@@ -356,7 +354,9 @@ export const PricingBlockPreview: React.FC<BlockPreviewProps> = ({
             >
               <h3 className="text-lg font-semibold mb-2">{tier.name}</h3>
               <div className="text-4xl font-bold mb-2">{tier.price}</div>
-              <p className={`text-sm mb-6 ${tier.isHighlighted ? "text-gray-300" : "text-gray-600"}`}>
+              <p
+                className={`text-sm mb-6 ${tier.isHighlighted ? "text-gray-300" : "text-gray-600"}`}
+              >
                 {tier.description}
               </p>
               <ul
@@ -479,7 +479,12 @@ export const PricingFooterBlockPreview: React.FC<BlockPreviewProps> = ({
       style={{ backgroundColor: props.backgroundColor }}
     >
       <div className="px-8 py-12">
-        <div className="grid gap-8" style={{ gridTemplateColumns: `repeat(${props.columns?.length || 3}, 1fr)` }}>
+        <div
+          className="grid gap-8"
+          style={{
+            gridTemplateColumns: `repeat(${props.columns?.length || 3}, 1fr)`,
+          }}
+        >
           {props.columns?.map((column: any) => (
             <div key={column.id}>
               <h4 className="font-semibold text-gray-900 mb-4">
