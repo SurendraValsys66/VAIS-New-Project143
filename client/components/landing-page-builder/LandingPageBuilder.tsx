@@ -14,10 +14,6 @@ import {
   createAboutBlock,
   createContactFormBlock,
   createFooterBlock,
-  createPricingBlock,
-  createFaqBlock,
-  createSignupBlock,
-  createPricingFooterBlock,
 } from "./utils";
 import { LandingPagePreview } from "./LandingPagePreview";
 import { BlocksPanel } from "./BlocksPanel";
