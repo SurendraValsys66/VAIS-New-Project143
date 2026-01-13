@@ -5126,7 +5126,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-gray-900 mb-3">Styling</h4>
+                  <h4 className="text-xs font-bold text-gray-900 mb-3">
+                    Styling
+                  </h4>
                   <div className="space-y-3">
                     <div>
                       <Label className="text-xs text-gray-700 mb-2 block">
@@ -5187,11 +5189,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           max="50"
                           value={selectedCard.borderRadius}
                           onChange={(e) =>
-                            handleCardUpdate("borderRadius", parseInt(e.target.value))
+                            handleCardUpdate(
+                              "borderRadius",
+                              parseInt(e.target.value),
+                            )
                           }
                           className="flex-1 focus:ring-valasys-orange focus:ring-2"
                         />
-                        <span className="px-2 py-1 text-sm text-gray-600">px</span>
+                        <span className="px-2 py-1 text-sm text-gray-600">
+                          px
+                        </span>
                       </div>
                     </div>
 
@@ -5205,11 +5212,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           min="0"
                           value={selectedCard.padding}
                           onChange={(e) =>
-                            handleCardUpdate("padding", parseInt(e.target.value))
+                            handleCardUpdate(
+                              "padding",
+                              parseInt(e.target.value),
+                            )
                           }
                           className="flex-1 focus:ring-valasys-orange focus:ring-2"
                         />
-                        <span className="px-2 py-1 text-sm text-gray-600">px</span>
+                        <span className="px-2 py-1 text-sm text-gray-600">
+                          px
+                        </span>
                       </div>
                     </div>
 
@@ -5227,7 +5239,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           }
                           className="flex-1 focus:ring-valasys-orange focus:ring-2"
                         />
-                        <span className="px-2 py-1 text-sm text-gray-600">px</span>
+                        <span className="px-2 py-1 text-sm text-gray-600">
+                          px
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -5309,7 +5323,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-gray-900 mb-3">Styling</h4>
+                  <h4 className="text-xs font-bold text-gray-900 mb-3">
+                    Styling
+                  </h4>
                   <div className="space-y-3">
                     <div>
                       <Label className="text-xs text-gray-700 mb-1 block">
@@ -5322,11 +5338,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           max="72"
                           value={selectedStat.fontSize}
                           onChange={(e) =>
-                            handleStatUpdate("fontSize", parseInt(e.target.value))
+                            handleStatUpdate(
+                              "fontSize",
+                              parseInt(e.target.value),
+                            )
                           }
                           className="flex-1 focus:ring-valasys-orange focus:ring-2"
                         />
-                        <span className="px-2 py-1 text-sm text-gray-600">px</span>
+                        <span className="px-2 py-1 text-sm text-gray-600">
+                          px
+                        </span>
                       </div>
                     </div>
 
@@ -5341,11 +5362,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           max="32"
                           value={selectedStat.labelFontSize}
                           onChange={(e) =>
-                            handleStatUpdate("labelFontSize", parseInt(e.target.value))
+                            handleStatUpdate(
+                              "labelFontSize",
+                              parseInt(e.target.value),
+                            )
                           }
                           className="flex-1 focus:ring-valasys-orange focus:ring-2"
                         />
-                        <span className="px-2 py-1 text-sm text-gray-600">px</span>
+                        <span className="px-2 py-1 text-sm text-gray-600">
+                          px
+                        </span>
                       </div>
                     </div>
 
@@ -5383,11 +5409,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           min="0"
                           value={selectedStat.padding}
                           onChange={(e) =>
-                            handleStatUpdate("padding", parseInt(e.target.value))
+                            handleStatUpdate(
+                              "padding",
+                              parseInt(e.target.value),
+                            )
                           }
                           className="flex-1 focus:ring-valasys-orange focus:ring-2"
                         />
-                        <span className="px-2 py-1 text-sm text-gray-600">px</span>
+                        <span className="px-2 py-1 text-sm text-gray-600">
+                          px
+                        </span>
                       </div>
                     </div>
                   </div>
