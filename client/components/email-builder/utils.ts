@@ -915,6 +915,21 @@ export function renderBlockToHTML(block: ContentBlock): string {
         .join("");
       return `<div style="width: ${width}; margin: 20px 0;">${statsHtml}</div>`;
     }
+    case "features": {
+      const featuresBlock = block as any;
+      const width = `${featuresBlock.width}${featuresBlock.widthUnit}`;
+      const columnWidth = 100 / featuresBlock.columnsCount;
+      const featuresHtml = featuresBlock.features
+        ?.map((feature: any) => {
+          return `<div style="width: ${columnWidth}%; display: inline-block; vertical-align: top; text-align: center; padding: ${feature.padding}px; box-sizing: border-box; background-color: ${feature.backgroundColor}; border-radius: ${feature.borderRadius}px; margin: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              <div style="font-size: 32px; margin-bottom: 12px; line-height: 1;">${feature.icon}</div>
+              <h3 style="margin: 0 0 8px 0; font-size: ${feature.titleFontSize}px; font-weight: bold; color: ${feature.textColor};">${feature.title}</h3>
+              <p style="margin: 0; font-size: ${feature.fontSize}px; color: ${feature.textColor}; line-height: 1.5;">${feature.description}</p>
+            </div>`;
+        })
+        .join("");
+      return `<div style="width: ${width}; margin: 20px 0; display: flex; flex-wrap: wrap; justify-content: center;">${featuresHtml}</div>`;
+    }
     case "divider":
       return `<hr style="border: none; border-top: ${block.height}px solid ${block.color}; margin: ${block.margin}px 0;" />`;
     case "product": {
