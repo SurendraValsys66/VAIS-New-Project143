@@ -5040,9 +5040,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         );
       case "twoColumnCard": {
         const twoColBlock = block as any;
-        const [selectedCardId, setSelectedCardId] = React.useState<string | null>(
-          twoColBlock.cards?.[0]?.id || null,
-        );
+        const [selectedCardId, setSelectedCardId] = React.useState<
+          string | null
+        >(twoColBlock.cards?.[0]?.id || null);
         const selectedCard = twoColBlock.cards?.find(
           (card: any) => card.id === selectedCardId,
         );
