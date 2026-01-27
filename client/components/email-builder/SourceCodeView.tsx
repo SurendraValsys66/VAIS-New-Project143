@@ -120,6 +120,121 @@ ${htmlContent.substring(htmlContent.indexOf('<div style="max-width:'), htmlConte
     toast.success("Pure HTML with inline CSS downloaded successfully");
   };
 
+  const handleDownloadPDF = () => {
+    // Create a new window to print as PDF with the email preview
+    const printWindow = window.open("", "", "height=900,width=1200");
+    if (printWindow) {
+      const bgColor = template.backgroundColor || "#ffffff";
+      const padding = template.padding || 20;
+
+      try {
+        printWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>${template.name || "Template"}</title>
+            <style>
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+                padding: 40px 20px;
+              }
+              .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 40px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+              }
+              .header {
+                border-bottom: 2px solid #e0e0e0;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+              }
+              .header h1 {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 10px;
+              }
+              .subject {
+                margin-top: 5px;
+                padding: 8px 12px;
+                background-color: #f0f0f0;
+                border-radius: 4px;
+                display: inline-block;
+                color: #666;
+                font-size: 14px;
+              }
+              .email-preview {
+                border-radius: 4px;
+                min-height: 400px;
+              }
+              .email-preview img {
+                max-width: 100%;
+                height: auto;
+              }
+              .email-preview h1, .email-preview h2, .email-preview h3 {
+                margin-bottom: 15px;
+              }
+              .email-preview p {
+                margin-bottom: 10px;
+                line-height: 1.6;
+              }
+              .email-preview a {
+                color: #007bff;
+                text-decoration: none;
+              }
+              .email-preview button {
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+              }
+              @media print {
+                body {
+                  background-color: white;
+                  padding: 0;
+                }
+                .container {
+                  box-shadow: none;
+                  padding: 20px 0;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>${template.name || "Email Template"}</h1>
+                <div class="subject"><strong>Subject:</strong> ${template.subject || "No Subject"}</div>
+              </div>
+              <div class="email-preview" style="background-color: ${bgColor}; padding: ${padding}px;">
+                ${htmlContent}
+              </div>
+            </div>
+          </body>
+          </html>
+        `);
+        printWindow.document.close();
+        setTimeout(() => {
+          printWindow.print();
+          setTimeout(() => printWindow.close(), 100);
+        }, 250);
+      } catch (error) {
+        console.error("Error generating PDF preview:", error);
+        toast.error("Failed to generate PDF preview");
+      }
+    }
+
+    toast.success(
+      "PDF preview opened. Use your browser's print dialog to save as PDF",
+    );
+  };
 
   return (
     <div className="flex flex-col h-full bg-gray-50">
