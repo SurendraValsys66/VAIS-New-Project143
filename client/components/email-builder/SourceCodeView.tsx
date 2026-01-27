@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { EmailTemplate } from "./types";
 import { renderTemplateToHTML } from "./utils";
 import { Button } from "@/components/ui/button";
@@ -19,11 +19,15 @@ export const SourceCodeView: React.FC<SourceCodeViewProps> = ({ template }) => {
 
   const htmlContent = renderTemplateToHTML(template);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(htmlContent);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(htmlContent);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  }, [htmlContent]);
 
   const handleDownload = () => {
     const element = document.createElement("a");
