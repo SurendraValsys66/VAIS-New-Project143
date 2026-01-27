@@ -139,7 +139,10 @@ ${htmlContent.substring(htmlContent.indexOf('<div style="max-width:'), htmlConte
                 {copied ? "Copied!" : "Copy Code"}
               </TooltipContent>
             </Tooltip>
-            <Tooltip open={openDownloadTooltip} onOpenChange={setOpenDownloadTooltip}>
+            <Tooltip
+              open={openDownloadTooltip}
+              onOpenChange={setOpenDownloadTooltip}
+            >
               <TooltipTrigger asChild>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
