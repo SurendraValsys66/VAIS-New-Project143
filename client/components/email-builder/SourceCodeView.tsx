@@ -90,7 +90,7 @@ export const SourceCodeView: React.FC<SourceCodeViewProps> = ({ template }) => {
                   <Copy className="w-4 h-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent className="font-medium" side="top" key={copied ? 'copied' : 'copy'}>
+              <TooltipContent className="font-medium" side="top">
                 {copied ? "Copied!" : "Copy Code"}
               </TooltipContent>
             </Tooltip>
