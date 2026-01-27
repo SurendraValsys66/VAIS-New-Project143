@@ -2364,19 +2364,20 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             </div>
           </div>
         );
-      case "header":
+      case "header": {
+        const headerBlock = block as HeaderBlock;
         return (
           <div className="space-y-4">
             {/* Logo Upload */}
             <div>
               <Label>Logo</Label>
-              {block.logo && (
+              {headerBlock.logo && (
                 <div className="mb-2 flex items-center gap-2">
-                  <img src={block.logo} alt="Logo" className="max-h-12 max-w-12" />
+                  <img src={headerBlock.logo} alt="Logo" className="max-h-12 max-w-12" />
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => onBlockUpdate({ ...block, logo: "" })}
+                    onClick={() => onBlockUpdate({ ...headerBlock, logo: "" })}
                   >
                     Remove
                   </Button>
@@ -2391,7 +2392,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     const reader = new FileReader();
                     reader.onload = (event) => {
                       onBlockUpdate({
-                        ...block,
+                        ...headerBlock,
                         logo: event.target?.result as string,
                       });
                     };
@@ -2409,9 +2410,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <Input
                   id="logoWidth"
                   type="number"
-                  value={block.logoWidth}
+                  value={headerBlock.logoWidth}
                   onChange={(e) =>
-                    onBlockUpdate({ ...block, logoWidth: parseInt(e.target.value) })
+                    onBlockUpdate({ ...headerBlock, logoWidth: parseInt(e.target.value) })
                   }
                 />
               </div>
@@ -2420,9 +2421,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <Input
                   id="logoHeight"
                   type="number"
-                  value={block.logoHeight}
+                  value={headerBlock.logoHeight}
                   onChange={(e) =>
-                    onBlockUpdate({ ...block, logoHeight: parseInt(e.target.value) })
+                    onBlockUpdate({ ...headerBlock, logoHeight: parseInt(e.target.value) })
                   }
                 />
               </div>
@@ -2434,9 +2435,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               <Input
                 id="companyName"
                 type="text"
-                value={block.companyName}
+                value={headerBlock.companyName}
                 onChange={(e) =>
-                  onBlockUpdate({ ...block, companyName: e.target.value })
+                  onBlockUpdate({ ...headerBlock, companyName: e.target.value })
                 }
               />
             </div>
@@ -2448,9 +2449,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <Input
                   id="companyFontSize"
                   type="number"
-                  value={block.companyFontSize}
+                  value={headerBlock.companyFontSize}
                   onChange={(e) =>
-                    onBlockUpdate({ ...block, companyFontSize: parseInt(e.target.value) })
+                    onBlockUpdate({ ...headerBlock, companyFontSize: parseInt(e.target.value) })
                   }
                 />
               </div>
@@ -2459,9 +2460,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <Input
                   id="companyFontColor"
                   type="color"
-                  value={block.companyFontColor}
+                  value={headerBlock.companyFontColor}
                   onChange={(e) =>
-                    onBlockUpdate({ ...block, companyFontColor: e.target.value })
+                    onBlockUpdate({ ...headerBlock, companyFontColor: e.target.value })
                   }
                 />
               </div>
@@ -2471,16 +2472,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             <div>
               <Label>Links</Label>
               <div className="space-y-2">
-                {block.links.map((link, index) => (
+                {headerBlock.links.map((link, index) => (
                   <div key={link.id} className="flex gap-1">
                     <Input
                       type="text"
                       placeholder="Link text"
                       value={link.text}
                       onChange={(e) => {
-                        const newLinks = [...block.links];
+                        const newLinks = [...headerBlock.links];
                         newLinks[index].text = e.target.value;
-                        onBlockUpdate({ ...block, links: newLinks });
+                        onBlockUpdate({ ...headerBlock, links: newLinks });
                       }}
                       className="flex-1"
                     />
@@ -2489,9 +2490,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       placeholder="URL"
                       value={link.url}
                       onChange={(e) => {
-                        const newLinks = [...block.links];
+                        const newLinks = [...headerBlock.links];
                         newLinks[index].url = e.target.value;
-                        onBlockUpdate({ ...block, links: newLinks });
+                        onBlockUpdate({ ...headerBlock, links: newLinks });
                       }}
                       className="flex-1"
                     />
@@ -2499,8 +2500,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       variant="outline"
                       size="sm"
                       onClick={() => {
-                        const newLinks = block.links.filter((_, i) => i !== index);
-                        onBlockUpdate({ ...block, links: newLinks });
+                        const newLinks = headerBlock.links.filter((_, i) => i !== index);
+                        onBlockUpdate({ ...headerBlock, links: newLinks });
                       }}
                     >
                       ✕
@@ -2513,8 +2514,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   className="w-full"
                   onClick={() => {
                     onBlockUpdate({
-                      ...block,
-                      links: [...block.links, { id: Math.random().toString(), text: "", url: "" }],
+                      ...headerBlock,
+                      links: [...headerBlock.links, { id: Math.random().toString(), text: "", url: "" }],
                     });
                   }}
                 >
@@ -2530,9 +2531,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <Input
                   id="linksFontSize"
                   type="number"
-                  value={block.linksFontSize}
+                  value={headerBlock.linksFontSize}
                   onChange={(e) =>
-                    onBlockUpdate({ ...block, linksFontSize: parseInt(e.target.value) })
+                    onBlockUpdate({ ...headerBlock, linksFontSize: parseInt(e.target.value) })
                   }
                 />
               </div>
@@ -2541,9 +2542,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <Input
                   id="linksFontColor"
                   type="color"
-                  value={block.linksFontColor}
+                  value={headerBlock.linksFontColor}
                   onChange={(e) =>
-                    onBlockUpdate({ ...block, linksFontColor: e.target.value })
+                    onBlockUpdate({ ...headerBlock, linksFontColor: e.target.value })
                   }
                 />
               </div>
@@ -2555,9 +2556,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               <Input
                 id="headerBgColor"
                 type="color"
-                value={block.backgroundColor}
+                value={headerBlock.backgroundColor}
                 onChange={(e) =>
-                  onBlockUpdate({ ...block, backgroundColor: e.target.value })
+                  onBlockUpdate({ ...headerBlock, backgroundColor: e.target.value })
                 }
               />
             </div>
@@ -2568,14 +2569,15 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               <Input
                 id="headerPadding"
                 type="number"
-                value={block.padding}
+                value={headerBlock.padding}
                 onChange={(e) =>
-                  onBlockUpdate({ ...block, padding: parseInt(e.target.value) })
+                  onBlockUpdate({ ...headerBlock, padding: parseInt(e.target.value) })
                 }
               />
             </div>
           </div>
         );
+      }
       case "footer":
         return (
           <div className="space-y-4">
