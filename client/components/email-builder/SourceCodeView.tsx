@@ -28,7 +28,38 @@ export const SourceCodeView: React.FC<SourceCodeViewProps> = ({ template }) => {
   const htmlContent = renderTemplateToHTML(template);
 
   const handleCopy = useCallback(() => {
-    // Try modern Clipboard API first
+    const copyToClipboard = (text: string) => {
+      try {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        const successful = document.execCommand("copy");
+        document.body.removeChild(textArea);
+
+        if (successful) {
+          setCopied(true);
+          setOpenTooltip(true);
+          toast.success("Code copied to clipboard");
+          setTimeout(() => {
+            setCopied(false);
+            setOpenTooltip(false);
+          }, 2000);
+        } else {
+          toast.error("Failed to copy code");
+        }
+      } catch (err) {
+        console.error("Copy failed:", err);
+        toast.error("Failed to copy code");
+      }
+    };
+
+    // Try modern Clipboard API first, but fallback to execCommand
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(htmlContent)
@@ -44,44 +75,13 @@ export const SourceCodeView: React.FC<SourceCodeViewProps> = ({ template }) => {
         })
         .catch(() => {
           // Fallback to execCommand if Clipboard API fails
-          fallbackCopy();
+          copyToClipboard(htmlContent);
         });
     } else {
       // No Clipboard API available, use fallback
-      fallbackCopy();
+      copyToClipboard(htmlContent);
     }
   }, [htmlContent]);
-
-  const fallbackCopy = () => {
-    try {
-      const textArea = document.createElement("textarea");
-      textArea.value = htmlContent;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      textArea.style.top = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      const successful = document.execCommand("copy");
-      document.body.removeChild(textArea);
-
-      if (successful) {
-        setCopied(true);
-        setOpenTooltip(true);
-        toast.success("Code copied to clipboard");
-        setTimeout(() => {
-          setCopied(false);
-          setOpenTooltip(false);
-        }, 2000);
-      } else {
-        toast.error("Failed to copy code");
-      }
-    } catch (err) {
-      console.error("Fallback copy failed:", err);
-      toast.error("Failed to copy code");
-    }
-  };
 
   const handleDownloadInlineHTML = () => {
     try {
