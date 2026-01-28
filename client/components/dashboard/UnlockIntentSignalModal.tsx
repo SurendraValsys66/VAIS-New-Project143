@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Zap, Target } from "lucide-react";
@@ -48,7 +45,9 @@ export default function UnlockIntentSignalModal({
   onUnlock,
   currentlyClickedBadgeId,
 }: UnlockIntentSignalModalProps) {
-  const [selectedOptions, setSelectedOptions] = useState<Set<string>>(new Set(["current"]));
+  const [selectedOptions, setSelectedOptions] = useState<Set<string>>(
+    new Set(["current"]),
+  );
 
   const handleCheckboxChange = (optionId: string) => {
     const newSelected = new Set(selectedOptions);
@@ -107,43 +106,93 @@ export default function UnlockIntentSignalModal({
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 flex-shrink-0 text-teal-600">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-700">Real-time intent signals</span>
+                    <span className="text-sm text-gray-700">
+                      Real-time intent signals
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 flex-shrink-0 text-teal-600">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-700">Composite scoring breakdown</span>
+                    <span className="text-sm text-gray-700">
+                      Composite scoring breakdown
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 flex-shrink-0 text-teal-600">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-700">Matched topic analysis</span>
+                    <span className="text-sm text-gray-700">
+                      Matched topic analysis
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 flex-shrink-0 text-teal-600">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-700">Bombora Intent Delta Count</span>
+                    <span className="text-sm text-gray-700">
+                      Bombora Intent Delta Count
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 flex-shrink-0 text-teal-600">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-700">AI-powered insights</span>
+                    <span className="text-sm text-gray-700">
+                      AI-powered insights
+                    </span>
                   </div>
                 </div>
               </div>
@@ -180,7 +229,8 @@ export default function UnlockIntentSignalModal({
             {/* Note Message */}
             <div className="p-4 bg-amber-50 border-l-4 border-amber-500 rounded mb-6">
               <p className="text-sm text-amber-900">
-                <span className="font-semibold">Note:</span> Each unlock intent signal deducts 5 credit.
+                <span className="font-semibold">Note:</span> Each unlock intent
+                signal deducts 5 credit.
               </p>
             </div>
 
