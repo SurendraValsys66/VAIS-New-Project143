@@ -94,7 +94,7 @@ export default function UnlockIntentSignalModal({
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2F8dbb6e7a8a734c63b310cb1c08a8ce8b%2F5c3388ec3fcc408bbc81fa5f11c15baf?format=webp&width=800&height=1200"
                 alt="VAIS Advanced Sales Intelligence & Automation"
-                className="w-full h-auto object-cover rounded-2xl"
+                className="w-full h-[250px] object-cover rounded-2xl"
               />
             </div>
           </div>

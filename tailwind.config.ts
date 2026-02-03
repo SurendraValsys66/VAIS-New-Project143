@@ -99,10 +99,22 @@ export default {
             height: "0",
           },
         },
+        "badge-popup": {
+          "0%": {
+            transform: "scale(1)",
+          },
+          "50%": {
+            transform: "scale(1.12)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "badge-popup": "badge-popup 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },

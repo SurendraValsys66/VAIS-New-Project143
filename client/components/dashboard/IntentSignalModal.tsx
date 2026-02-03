@@ -219,6 +219,8 @@ export default function IntentSignalModal({
                   className={cn(
                     "text-xs px-3 py-1",
                     getIntentSignalColor(data.intentSignal),
+                    data.intentSignal === "Super Strong" &&
+                      "animate-badge-popup",
                   )}
                 >
                   {data.intentSignal}

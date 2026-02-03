@@ -21,6 +21,8 @@ interface IntentSignalChartProps {
   className?: string;
   isLocked?: boolean;
   onLockClick?: () => void;
+  itemId?: string;
+  onAddToList?: (itemId: string, checked: boolean) => void;
 }
 
 const getIntentSignalColor = (signal: string) => {
@@ -45,6 +47,8 @@ export default function IntentSignalChart({
   className,
   isLocked = false,
   onLockClick,
+  itemId,
+  onAddToList,
 }: IntentSignalChartProps) {
   if (isLocked) {
     return (
@@ -76,10 +80,10 @@ export default function IntentSignalChart({
   }
 
   return (
-    <IntentSignalPopover data={data}>
+    <IntentSignalPopover data={data} itemId={itemId} onAddToList={onAddToList}>
       <Badge
         className={cn(
-          "font-medium hover:shadow-md transition-shadow cursor-pointer",
+          "font-medium cursor-pointer",
           getIntentSignalColor(data.intentSignal),
           className,
         )}

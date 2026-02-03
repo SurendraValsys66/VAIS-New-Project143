@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Building2,
   MapPin,
@@ -10,6 +11,8 @@ import {
   Zap,
   Activity,
   Sparkles,
+  Download,
+  Check,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import IntentSignalModal from "./IntentSignalModal";
@@ -44,6 +47,8 @@ interface IntentSignalData {
 interface IntentSignalPopoverProps {
   data: IntentSignalData;
   children: React.ReactNode;
+  itemId?: string;
+  onAddToList?: (itemId: string, checked: boolean) => void;
 }
 
 const chartConfig = {
@@ -97,10 +102,13 @@ const getIntentSignalColor = (signal: string) => {
 export default function IntentSignalPopover({
   data,
   children,
+  itemId,
+  onAddToList,
 }: IntentSignalPopoverProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const chartData = generateChartData(data);
+  const [isAdded, setIsAdded] = useState(false);
 
   const handleChartClick = () => {
     setIsPanelOpen(false);
@@ -165,10 +173,41 @@ export default function IntentSignalPopover({
                     className={cn(
                       "text-xs px-3 py-1.5 font-semibold whitespace-nowrap",
                       getIntentSignalColor(data.intentSignal),
+                      data.intentSignal === "Super Strong" &&
+                        "animate-badge-popup",
                     )}
                   >
                     {data.intentSignal}
                   </Badge>
+                  {itemId && onAddToList && (
+                    <button
+                      onClick={() => {
+                        onAddToList(itemId, !isAdded);
+                        setIsAdded(!isAdded);
+                      }}
+                      className={cn(
+                        "px-3 h-9 rounded-lg flex items-center justify-center gap-2 transition-all flex-shrink-0 text-xs font-medium whitespace-nowrap",
+                        isAdded
+                          ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                          : "bg-slate-700 hover:bg-slate-600 text-slate-200",
+                      )}
+                      title={
+                        isAdded ? "Remove from download" : "Add to download"
+                      }
+                    >
+                      {isAdded ? (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span>Added</span>
+                        </>
+                      ) : (
+                        <>
+                          <Download className="w-4 h-4" />
+                          <span>Add to Download</span>
+                        </>
+                      )}
+                    </button>
+                  )}
                   <button
                     onClick={closePanelClick}
                     className="w-9 h-9 bg-slate-700 hover:bg-slate-600 rounded-lg flex items-center justify-center transition-colors flex-shrink-0"
@@ -363,29 +402,26 @@ export default function IntentSignalPopover({
                     </ResponsiveContainer>
                   </ChartContainer>
                 </div>
-                <div className="flex items-center justify-between mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                  <div className="flex items-center space-x-4 flex-1">
-                    <div>
+                <div className="flex items-center justify-center mt-4">
+                  <div className="flex items-center space-x-4 p-2.5 bg-blue-50 rounded-lg border border-blue-100 w-fit">
+                    <div className="text-center">
                       <p className="text-xs text-gray-600 font-medium">
                         Composite Score
                       </p>
-                      <p className="text-sm font-bold text-gray-900">
+                      <p className="text-xs font-bold text-gray-900">
                         ↑ 42% week-over-week
                       </p>
                     </div>
-                    <div className="w-px h-8 bg-gray-300"></div>
-                    <div>
+                    <div className="w-px h-6 bg-gray-300"></div>
+                    <div className="text-center">
                       <p className="text-xs text-gray-600 font-medium">
                         Delta Score
                       </p>
-                      <p className="text-sm font-bold text-gray-900">
+                      <p className="text-xs font-bold text-gray-900">
                         ↑ 18% week-over-week
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-valasys-orange font-semibold cursor-pointer hover:underline ml-4">
-                    View Details →
-                  </p>
                 </div>
               </div>
 
