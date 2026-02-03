@@ -80,7 +80,7 @@ export default function IntentSignalChart({
   }
 
   return (
-    <IntentSignalPopover data={data}>
+    <IntentSignalPopover data={data} itemId={itemId} onAddToList={onAddToList}>
       <Badge
         className={cn(
           "font-medium hover:shadow-md transition-shadow cursor-pointer",
