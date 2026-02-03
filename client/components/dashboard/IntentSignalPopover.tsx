@@ -165,6 +165,7 @@ export default function IntentSignalPopover({
                     className={cn(
                       "text-xs px-3 py-1.5 font-semibold whitespace-nowrap",
                       getIntentSignalColor(data.intentSignal),
+                      data.intentSignal === "Super Strong" && "animate-smooth-pulse",
                     )}
                   >
                     {data.intentSignal}
