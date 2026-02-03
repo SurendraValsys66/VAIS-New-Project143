@@ -128,7 +128,8 @@ export default function IntentSignalPopover({
 }: IntentSignalPopoverProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const chartData = generateChartData(data);
+  const [selectedTopic, setSelectedTopic] = useState<string | undefined>();
+  const chartData = generateChartData(data, selectedTopic);
   const [isAdded, setIsAdded] = useState(false);
 
   const handleChartClick = () => {
