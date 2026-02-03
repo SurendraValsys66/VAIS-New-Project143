@@ -62,22 +62,43 @@ const chartConfig = {
   },
 };
 
-const generateChartData = (intentData: IntentSignalData) => {
+const generateChartData = (
+  intentData: IntentSignalData,
+  selectedTopic?: string
+) => {
   const baseData = [];
-  const compositeBase = intentData.compositeScore;
-  const deltaBase = intentData.deltaScore;
+  let baseValue = intentData.compositeScore;
+
+  // If a topic is selected, generate data specific to that topic
+  if (selectedTopic) {
+    // Generate topic-specific scores based on topic index and name
+    const topicIndex = intentData.relatedTopics.indexOf(selectedTopic);
+    const baseScores = [65, 63, 58];
+    baseValue = baseScores[topicIndex] || 60;
+  }
 
   // Generate 7 weeks of data
   for (let i = 0; i < 7; i++) {
     const variation = (i / 6) * 0.6; // Progressive increase from week 1 to week 7
-    baseData.push({
-      week: `week${i + 1}`,
-      compositeScore: Math.max(
-        0,
-        Math.round(compositeBase * (0.2 + variation)),
-      ),
-      deltaScore: Math.max(0, Math.round(deltaBase * (0.2 + variation))),
-    });
+    const value = Math.max(0, Math.round(baseValue * (0.2 + variation)));
+
+    if (selectedTopic) {
+      // When a topic is selected, show only one data series
+      baseData.push({
+        week: `week${i + 1}`,
+        score: value,
+      });
+    } else {
+      // Default view with both composite and delta scores
+      baseData.push({
+        week: `week${i + 1}`,
+        compositeScore: Math.max(
+          0,
+          Math.round(intentData.compositeScore * (0.2 + variation)),
+        ),
+        deltaScore: Math.max(0, Math.round(intentData.deltaScore * (0.2 + variation))),
+      });
+    }
   }
   return baseData;
 };
