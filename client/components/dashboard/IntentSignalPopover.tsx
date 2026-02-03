@@ -173,7 +173,8 @@ export default function IntentSignalPopover({
                     className={cn(
                       "text-xs px-3 py-1.5 font-semibold whitespace-nowrap",
                       getIntentSignalColor(data.intentSignal),
-                      data.intentSignal === "Super Strong" && "animate-badge-popup",
+                      data.intentSignal === "Super Strong" &&
+                        "animate-badge-popup",
                     )}
                   >
                     {data.intentSignal}
@@ -188,9 +189,11 @@ export default function IntentSignalPopover({
                         "px-3 h-9 rounded-lg flex items-center justify-center gap-2 transition-all flex-shrink-0 text-xs font-medium whitespace-nowrap",
                         isAdded
                           ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                          : "bg-slate-700 hover:bg-slate-600 text-slate-200"
+                          : "bg-slate-700 hover:bg-slate-600 text-slate-200",
                       )}
-                      title={isAdded ? "Remove from download" : "Add to download"}
+                      title={
+                        isAdded ? "Remove from download" : "Add to download"
+                      }
                     >
                       {isAdded ? (
                         <>
