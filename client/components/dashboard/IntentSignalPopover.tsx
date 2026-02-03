@@ -364,29 +364,26 @@ export default function IntentSignalPopover({
                     </ResponsiveContainer>
                   </ChartContainer>
                 </div>
-                <div className="flex items-center justify-between mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                  <div className="flex items-center space-x-4 flex-1">
-                    <div>
+                <div className="flex items-center justify-center mt-4">
+                  <div className="flex items-center space-x-4 p-2.5 bg-blue-50 rounded-lg border border-blue-100 w-fit">
+                    <div className="text-center">
                       <p className="text-xs text-gray-600 font-medium">
                         Composite Score
                       </p>
-                      <p className="text-sm font-bold text-gray-900">
-                        ↑ 42% week-over-week
+                      <p className="text-xs font-bold text-gray-900">
+                        ↑ 42%
                       </p>
                     </div>
-                    <div className="w-px h-8 bg-gray-300"></div>
-                    <div>
+                    <div className="w-px h-6 bg-gray-300"></div>
+                    <div className="text-center">
                       <p className="text-xs text-gray-600 font-medium">
                         Delta Score
                       </p>
-                      <p className="text-sm font-bold text-gray-900">
-                        ↑ 18% week-over-week
+                      <p className="text-xs font-bold text-gray-900">
+                        ↑ 18%
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-valasys-orange font-semibold cursor-pointer hover:underline ml-4">
-                    View Details →
-                  </p>
                 </div>
               </div>
 
