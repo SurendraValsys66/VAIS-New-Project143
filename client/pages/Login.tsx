@@ -196,8 +196,8 @@ export default function Login() {
         </div>
 
         {/* 2FA Card */}
-        <Card className="w-full max-w-md border-valasys-gray-200 shadow-xl bg-white/95 backdrop-blur-sm relative z-10">
-          <CardHeader className="text-center space-y-4">
+        <Card className="w-full max-w-sm lg:max-w-md border-valasys-gray-200 shadow-xl bg-white/95 backdrop-blur-sm relative z-10">
+          <CardHeader className="text-center space-y-3">
             <img
               src="https://cdn.builder.io/api/v1/image/assets%2F76d83d63beb8455692b1855a78aa9524%2F5ee47be8ea214f9c9b220b553ddb9ad1?format=webp&width=800"
               alt="Valasys AI Score logo"
