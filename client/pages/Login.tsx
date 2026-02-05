@@ -537,7 +537,6 @@ export default function Login() {
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-32 -right-32 w-64 h-64 lg:w-96 lg:h-96 rounded-full bg-valasys-orange/10 blur-3xl"></div>
-          <div className="absolute -bottom-32 -left-32 w-64 h-64 lg:w-96 lg:h-96 rounded-full bg-valasys-blue/10 blur-3xl"></div>
         </div>
 
         <div className="relative z-10 flex flex-col w-full h-full px-6 lg:px-10 py-6 lg:py-8">
