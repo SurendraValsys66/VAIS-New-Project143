@@ -604,7 +604,7 @@ export default function Login() {
 
           {/* Bottom Section - Partnerships & Trust */}
           <div
-            className={`mt-3 lg:mt-4 pt-3 border-t border-white/20 transform transition-all duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+            className={`mt-2 lg:mt-2.5 pt-2 border-t border-white/20 transform transition-all duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
             style={{ transitionDelay: "300ms" }}
           >
             {/* Compact Partners Section */}
