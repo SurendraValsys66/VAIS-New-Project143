@@ -544,17 +544,20 @@ export default function Login() {
         <div className="relative z-10 flex flex-col w-full h-full px-6 lg:px-10 py-6 lg:py-8">
           {/* Header Section */}
           <div
-            className={`mb-4 lg:mb-6 transform transition-all duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "-translate-y-6 opacity-0"}`}
+            className={`mb-2 lg:mb-3 transform transition-all duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "-translate-y-6 opacity-0"}`}
           >
-            <p className="text-xs font-semibold text-valasys-orange tracking-widest uppercase mb-1.5">
+            <p className="text-xs font-semibold text-valasys-orange tracking-widest uppercase mb-1">
               Welcome Back
             </p>
-            <h2 className="text-xl lg:text-2xl font-bold text-valasys-gray-900 leading-snug">
+            <h2 className="text-lg lg:text-xl font-bold text-valasys-gray-900 leading-tight">
               Your AI Scoring <br />
               <span className="text-valasys-orange">
                 Revolution Starts Here
               </span>
             </h2>
+            <p className="text-xs text-valasys-gray-600 mt-1 lg:mt-1.5">
+              Unlock your AI-powered selling platform to uncover deeper insights, accelerate decision-making, and drive intelligent business outcomes.
+            </p>
           </div>
 
           {/* Main Content Container */}
