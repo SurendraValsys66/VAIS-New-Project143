@@ -620,12 +620,14 @@ function DeliverablesDialog({
                         <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50">
                           Job Level
                         </th>
-                        <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-gray-50">
-                          {geolocations.length > 0 ? geolocations[0] : "Geography 1"}
-                        </th>
-                        <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-gray-50">
-                          {geolocations.length > 1 ? geolocations[1] : "Geography 2"}
-                        </th>
+                        {selectedGeolocations.map((geo) => (
+                          <th
+                            key={geo}
+                            className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-gray-50"
+                          >
+                            {geo}
+                          </th>
+                        ))}
                         <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-blue-50 font-bold">
                           Total
                         </th>
@@ -633,11 +635,10 @@ function DeliverablesDialog({
                     </thead>
                     <tbody>
                       {jobLevelList.map((level, index) => {
-                        const geo1 =
-                          jobLevelData[level]?.[geolocations[0] || "Geo1"] || 0;
-                        const geo2 =
-                          jobLevelData[level]?.[geolocations[1] || "Geo2"] || 0;
-                        const total = geo1 + geo2;
+                        const levelTotal = selectedGeolocations.reduce(
+                          (sum, geo) => sum + (jobLevelData[level]?.[geo] || 0),
+                          0,
+                        );
                         return (
                           <tr
                             key={level}
@@ -646,14 +647,16 @@ function DeliverablesDialog({
                             <td className="px-6 py-3 text-sm font-medium text-gray-900">
                               {level}
                             </td>
-                            <td className="px-6 py-3 text-sm text-center text-gray-600">
-                              {geo1}
-                            </td>
-                            <td className="px-6 py-3 text-sm text-center text-gray-600">
-                              {geo2}
-                            </td>
+                            {selectedGeolocations.map((geo) => (
+                              <td
+                                key={geo}
+                                className="px-6 py-3 text-sm text-center text-gray-600"
+                              >
+                                {jobLevelData[level]?.[geo] || 0}
+                              </td>
+                            ))}
                             <td className="px-6 py-3 text-sm text-center font-bold text-blue-600">
-                              {total}
+                              {levelTotal}
                             </td>
                           </tr>
                         );
@@ -662,38 +665,20 @@ function DeliverablesDialog({
                         <td className="px-6 py-3 text-sm text-gray-900">
                           Total
                         </td>
-                        <td className="px-6 py-3 text-sm text-center text-gray-900">
-                          {jobLevelList.reduce(
-                            (sum, level) =>
-                              sum +
-                              (jobLevelData[level]?.[
-                                geolocations[0] || "Geo1"
-                              ] || 0),
-                            0,
-                          )}
-                        </td>
-                        <td className="px-6 py-3 text-sm text-center text-gray-900">
-                          {jobLevelList.reduce(
-                            (sum, level) =>
-                              sum +
-                              (jobLevelData[level]?.[
-                                geolocations[1] || "Geo2"
-                              ] || 0),
-                            0,
-                          )}
-                        </td>
+                        {selectedGeolocations.map((geo) => (
+                          <td
+                            key={geo}
+                            className="px-6 py-3 text-sm text-center text-gray-900"
+                          >
+                            {jobLevelList.reduce(
+                              (sum, level) =>
+                                sum + (jobLevelData[level]?.[geo] || 0),
+                              0,
+                            )}
+                          </td>
+                        ))}
                         <td className="px-6 py-3 text-sm text-center text-blue-700">
-                          {jobLevelList.reduce(
-                            (sum, level) =>
-                              sum +
-                              ((jobLevelData[level]?.[
-                                geolocations[0] || "Geo1"
-                              ] || 0) +
-                                (jobLevelData[level]?.[
-                                  geolocations[1] || "Geo2"
-                                ] || 0)),
-                            0,
-                          )}
+                          {jobLevelTotal}
                         </td>
                       </tr>
                     </tbody>
