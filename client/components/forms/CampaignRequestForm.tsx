@@ -536,6 +536,101 @@ function DeliverablesDialog({
         </DialogHeader>
 
         <div className="space-y-6 py-4">
+          {/* Database Reach Tables */}
+          <div className="space-y-6">
+            {/* Database Reach by Job Level Table */}
+            <div className="bg-white border border-gray-300 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 px-4 py-3 border-b border-gray-300">
+                <h4 className="text-sm font-bold text-gray-900">Database Reach by Job Level</h4>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-200 bg-gray-50">
+                      <th className="px-4 py-2 text-left font-semibold text-gray-700 bg-gray-100">Job Level</th>
+                      <th className="px-4 py-2 text-center font-semibold text-gray-700 bg-gray-100">{geolocations[0] || "Geolocation 1"}</th>
+                      <th className="px-4 py-2 text-center font-semibold text-gray-700 bg-gray-100">{geolocations[1] || "Geolocation 2"}</th>
+                      <th className="px-4 py-2 text-center font-semibold text-gray-700 bg-gray-100">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {jobLevelList.map((level) => {
+                      const geo1 = jobLevelData[level]?.[geolocations[0] || "Geo1"] || 0;
+                      const geo2 = jobLevelData[level]?.[geolocations[1] || "Geo2"] || 0;
+                      const total = geo1 + geo2;
+                      return (
+                        <tr key={level} className="border-b border-gray-200 hover:bg-gray-50">
+                          <td className="px-4 py-2 text-gray-900 font-medium">{level}</td>
+                          <td className="px-4 py-2 text-center text-gray-600">{geo1}</td>
+                          <td className="px-4 py-2 text-center text-gray-600">{geo2}</td>
+                          <td className="px-4 py-2 text-center font-semibold text-gray-900">{total}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr className="bg-gray-100 border-t-2 border-gray-300 font-bold">
+                      <td className="px-4 py-2 text-gray-900">Total</td>
+                      <td className="px-4 py-2 text-center text-gray-900">
+                        {jobLevelList.reduce((sum, level) => sum + (jobLevelData[level]?.[geolocations[0] || "Geo1"] || 0), 0)}
+                      </td>
+                      <td className="px-4 py-2 text-center text-gray-900">
+                        {jobLevelList.reduce((sum, level) => sum + (jobLevelData[level]?.[geolocations[1] || "Geo2"] || 0), 0)}
+                      </td>
+                      <td className="px-4 py-2 text-center text-gray-900">
+                        {jobLevelList.reduce((sum, level) => sum + ((jobLevelData[level]?.[geolocations[0] || "Geo1"] || 0) + (jobLevelData[level]?.[geolocations[1] || "Geo2"] || 0)), 0)}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Database Reach by Employee Size Table */}
+            <div className="bg-white border border-gray-300 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 px-4 py-3 border-b border-gray-300">
+                <h4 className="text-sm font-bold text-gray-900">Database Reach by Employee Size</h4>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-200 bg-gray-50">
+                      <th className="px-4 py-2 text-left font-semibold text-gray-700 bg-gray-100">Employee Size</th>
+                      <th className="px-4 py-2 text-center font-semibold text-gray-700 bg-gray-100">{geolocations[0] || "Geolocation 1"}</th>
+                      <th className="px-4 py-2 text-center font-semibold text-gray-700 bg-gray-100">{geolocations[1] || "Geolocation 2"}</th>
+                      <th className="px-4 py-2 text-center font-semibold text-gray-700 bg-gray-100">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {employeeSizeList.map((size) => {
+                      const geo1 = employeeSizeData[size]?.[geolocations[0] || "Geo1"] || 0;
+                      const geo2 = employeeSizeData[size]?.[geolocations[1] || "Geo2"] || 0;
+                      const total = geo1 + geo2;
+                      return (
+                        <tr key={size} className="border-b border-gray-200 hover:bg-gray-50">
+                          <td className="px-4 py-2 text-gray-900 font-medium">{size}</td>
+                          <td className="px-4 py-2 text-center text-gray-600">{geo1}</td>
+                          <td className="px-4 py-2 text-center text-gray-600">{geo2}</td>
+                          <td className="px-4 py-2 text-center font-semibold text-gray-900">{total}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr className="bg-gray-100 border-t-2 border-gray-300 font-bold">
+                      <td className="px-4 py-2 text-gray-900">Total</td>
+                      <td className="px-4 py-2 text-center text-gray-900">
+                        {employeeSizeList.reduce((sum, size) => sum + (employeeSizeData[size]?.[geolocations[0] || "Geo1"] || 0), 0)}
+                      </td>
+                      <td className="px-4 py-2 text-center text-gray-900">
+                        {employeeSizeList.reduce((sum, size) => sum + (employeeSizeData[size]?.[geolocations[1] || "Geo2"] || 0), 0)}
+                      </td>
+                      <td className="px-4 py-2 text-center text-gray-900">
+                        {employeeSizeList.reduce((sum, size) => sum + ((employeeSizeData[size]?.[geolocations[0] || "Geo1"] || 0) + (employeeSizeData[size]?.[geolocations[1] || "Geo2"] || 0)), 0)}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
           {/* Key Metrics Section */}
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4 border border-orange-200">
