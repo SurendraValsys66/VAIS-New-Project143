@@ -665,12 +665,6 @@ function DeliverablesDialog({
               <li className="flex gap-3 text-gray-700">
                 <ChevronRight className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
                 <span className="text-sm">
-                  Deliverables will be available within 24-48 hours after campaign submission
-                </span>
-              </li>
-              <li className="flex gap-3 text-gray-700">
-                <ChevronRight className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                <span className="text-sm">
                   These are estimated counts based on current database. Final numbers may vary slightly
                 </span>
               </li>
