@@ -722,7 +722,7 @@ function DeliverablesDialog({
                       </tr>
                     </thead>
                     <tbody>
-                      {employeeSizeList.map((size, index) => {
+                      {selectedEmployeeSizeList.map((size, index) => {
                         const sizeTotal = selectedGeolocations.reduce(
                           (sum, geo) => sum + (employeeSizeData[size]?.[geo] || 0),
                           0,
@@ -758,7 +758,7 @@ function DeliverablesDialog({
                             key={geo}
                             className="px-6 py-3 text-sm text-center text-gray-900"
                           >
-                            {employeeSizeList.reduce(
+                            {selectedEmployeeSizeList.reduce(
                               (sum, size) =>
                                 sum + (employeeSizeData[size]?.[geo] || 0),
                               0,
