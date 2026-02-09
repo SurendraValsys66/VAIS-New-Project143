@@ -631,43 +631,6 @@ function DeliverablesDialog({
             </div>
           </div>
 
-          {/* Key Metrics Section */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4 border border-orange-200">
-              <div className="flex items-center gap-2 mb-2">
-                <Users className="w-4 h-4 text-orange-600" />
-                <span className="text-xs text-gray-600 font-medium">
-                  Total Prospects
-                </span>
-              </div>
-              <p className="text-xl font-bold text-gray-900">
-                {totalDeliverables.toLocaleString()}
-              </p>
-              <p className="text-xs text-gray-600 mt-1">All Regions</p>
-            </div>
-
-            {Object.entries(regionDeliverables).map(([region, count]) => {
-              const info = regionInfo[region];
-              const colorClass = info.color.replace('text-', 'text-');
-              const bgColorClass = info.bgColor;
-              const borderColorClass = info.borderColor;
-
-              return (
-                <div key={region} className={`${bgColorClass} border ${borderColorClass} rounded-lg p-4`}>
-                  <div className="flex items-center gap-1 mb-2">
-                    <Globe className={`w-3 h-3 ${info.color}`} />
-                    <span className={`text-xs font-bold ${info.color}`}>
-                      {region}
-                    </span>
-                  </div>
-                  <p className={`text-lg font-bold ${info.color}`}>
-                    {count.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-gray-600 mt-1">{info.description}</p>
-                </div>
-              );
-            })}
-          </div>
 
           {/* Campaign Details */}
           <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
