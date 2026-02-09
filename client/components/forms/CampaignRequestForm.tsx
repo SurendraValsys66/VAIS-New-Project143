@@ -551,8 +551,8 @@ function DeliverablesDialog({
           {/* Database Reach Tabs */}
           <Tabs defaultValue="job-level" className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-gray-100 p-1 rounded-lg">
-              <TabsTrigger value="job-level" className="text-sm font-medium">Job Level</TabsTrigger>
-              <TabsTrigger value="employee-size" className="text-sm font-medium">Employee Size</TabsTrigger>
+              <TabsTrigger value="job-level" className="text-sm font-medium">Job Level (Total count {jobLevelTotal})</TabsTrigger>
+              <TabsTrigger value="employee-size" className="text-sm font-medium">Employee Size (Total count {employeeSizeTotal})</TabsTrigger>
             </TabsList>
 
             {/* Job Level Tab */}
