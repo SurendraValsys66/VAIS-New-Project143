@@ -1182,6 +1182,7 @@ export default function CampaignRequestForm() {
                             selected={field.value}
                             onSelectedChange={field.onChange}
                             placeholder="Select levels"
+                            showSelectAll={true}
                           />
                         </FormControl>
                         <FormMessage />
