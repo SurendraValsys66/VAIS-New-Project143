@@ -75,6 +75,7 @@ const campaignFormSchema = z.object({
   revenue: z.string().min(1, "Revenue is required"),
   industries: z.array(z.string()).min(1, "At least one industry is required"),
   talFile: z.any().optional(),
+  campaignAssets: z.array(z.any()).optional().default([]),
 });
 
 type CampaignFormData = z.infer<typeof campaignFormSchema>;
