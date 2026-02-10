@@ -1369,41 +1369,91 @@ export default function CampaignRequestForm() {
                     )}
                   </button>
 
-                  {/* Landing Page Button */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const pageAsset: SelectedAsset = {
-                        id: "landing-page",
-                        type: "landing-page",
-                        name: "Landing Page Builder",
-                        description:
-                          "Create conversion-optimized landing pages matched to your campaign",
-                        config: {},
-                      };
-                      if (
-                        selectedAssets.some((a) => a.id === pageAsset.id)
-                      ) {
-                        setSelectedAssets(
-                          selectedAssets.filter((a) => a.id !== pageAsset.id),
-                        );
-                      } else {
-                        setSelectedAssets([...selectedAssets, pageAsset]);
-                      }
-                    }}
-                    className={cn(
-                      "py-2 px-3 rounded-lg text-xs font-medium transition-all border-2 flex items-center justify-center gap-2",
-                      selectedAssets.some((a) => a.id === "landing-page")
-                        ? "bg-purple-100 border-purple-500 text-purple-900"
-                        : "bg-gray-50 border-gray-200 text-gray-700 hover:border-purple-300",
-                    )}
-                  >
-                    <Globe className="w-3 h-3" />
-                    <span>Landing Page</span>
-                    {selectedAssets.some((a) => a.id === "landing-page") && (
-                      <Check className="w-3 h-3 ml-auto" />
-                    )}
-                  </button>
+                  {/* Landing Page Dropdown Button */}
+                  <Popover open={landingPageDropdownOpen} onOpenChange={setLandingPageDropdownOpen}>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className={cn(
+                          "py-2 px-3 rounded-lg text-xs font-medium transition-all border-2 flex items-center justify-center gap-2 w-full",
+                          selectedAssets.some((a) => a.id === "landing-page" || a.id === "email-template")
+                            ? "bg-purple-100 border-purple-500 text-purple-900"
+                            : "bg-gray-50 border-gray-200 text-gray-700 hover:border-purple-300",
+                        )}
+                      >
+                        <Globe className="w-3 h-3" />
+                        <span>Landing Page</span>
+                        {selectedAssets.some((a) => a.id === "landing-page" || a.id === "email-template") && (
+                          <Check className="w-3 h-3 ml-auto" />
+                        )}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-0">
+                      <div className="flex flex-col">
+                        {/* Email Template Builder Option */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const emailTemplateAsset: SelectedAsset = {
+                              id: "email-template",
+                              type: "landing-page",
+                              name: "Email Template Builder",
+                              description:
+                                "Design custom email templates with drag-and-drop editor",
+                              config: {},
+                            };
+                            if (
+                              !selectedAssets.some((a) => a.id === emailTemplateAsset.id)
+                            ) {
+                              setSelectedAssets([...selectedAssets, emailTemplateAsset]);
+                            }
+                            setLandingPageDropdownOpen(false);
+                          }}
+                          className="px-4 py-3 text-xs text-left hover:bg-purple-50 border-b border-gray-200 flex items-center gap-2 transition-colors"
+                        >
+                          <Mail className="w-4 h-4 text-purple-600" />
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-900">Email Template Builder</p>
+                            <p className="text-xs text-gray-600">Design custom email templates</p>
+                          </div>
+                          {selectedAssets.some((a) => a.id === "email-template") && (
+                            <Check className="w-4 h-4 text-green-600" />
+                          )}
+                        </button>
+
+                        {/* Landing Page Builder Option */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const pageAsset: SelectedAsset = {
+                              id: "landing-page",
+                              type: "landing-page",
+                              name: "Landing Page Builder",
+                              description:
+                                "Create conversion-optimized landing pages matched to your campaign",
+                              config: {},
+                            };
+                            if (
+                              !selectedAssets.some((a) => a.id === pageAsset.id)
+                            ) {
+                              setSelectedAssets([...selectedAssets, pageAsset]);
+                            }
+                            setLandingPageDropdownOpen(false);
+                          }}
+                          className="px-4 py-3 text-xs text-left hover:bg-purple-50 flex items-center gap-2 transition-colors"
+                        >
+                          <Globe className="w-4 h-4 text-purple-600" />
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-900">Landing Page Builder</p>
+                            <p className="text-xs text-gray-600">Create conversion-optimized pages</p>
+                          </div>
+                          {selectedAssets.some((a) => a.id === "landing-page") && (
+                            <Check className="w-4 h-4 text-green-600" />
+                          )}
+                        </button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
 
                   {/* Upload Template Button */}
                   <button
