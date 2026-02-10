@@ -236,7 +236,7 @@ export function AIEmailGeneratorModal({
           <div className="space-y-4">
             {/* Navigation Tabs */}
             <Tabs
-              value={`sample-${currentSampleIndex}`}
+              value={currentSample.id}
               onValueChange={(value) => {
                 const index = samples.findIndex((s) => s.id === value);
                 setCurrentSampleIndex(index);
