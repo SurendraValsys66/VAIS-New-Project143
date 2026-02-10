@@ -563,8 +563,8 @@ function DeliverablesDialog({
   }, 0);
 
   // Use only selected employee sizes (no limit)
-  const selectedEmployeeSizeList = employeeSize
-    ? [employeeSize]
+  const selectedEmployeeSizeList = employeeSize && employeeSize.length > 0
+    ? employeeSize
     : [
         "1-10",
         "11-50",
