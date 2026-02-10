@@ -1394,7 +1394,7 @@ export default function CampaignRequestForm() {
                       }
                     }}
                     className={cn(
-                      "py-2 px-3 rounded-lg text-xs font-medium transition-all border-2 flex items-center justify-center gap-2",
+                      "py-2 px-3 rounded-lg text-xs font-medium transition-all border-2 flex items-center justify-center gap-2 hidden",
                       selectedAssets.some((a) => a.id === "template-upload")
                         ? "bg-amber-100 border-amber-500 text-amber-900"
                         : "bg-gray-50 border-gray-200 text-gray-700 hover:border-amber-300",
