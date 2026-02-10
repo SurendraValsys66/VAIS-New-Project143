@@ -1205,6 +1205,7 @@ export default function CampaignRequestForm() {
                             onSelectedChange={field.onChange}
                             placeholder="Select locations"
                             searchPlaceholder="Search..."
+                            showSelectAll={true}
                           />
                         </FormControl>
                         <FormMessage />
