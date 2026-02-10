@@ -227,65 +227,6 @@ ${campaignName}`,
         <div className="space-y-6 py-4">
           {/* INPUT SECTION */}
           <div className="space-y-4">
-            {/* Product Description */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">
-                Product Description *
-              </label>
-              <div className="relative">
-                <Textarea
-                  placeholder="Describe your product or service in detail. Include key features, benefits, and unique value propositions..."
-                  value={productDescription}
-                  onChange={(e) => setProductDescription(e.target.value)}
-                  className="min-h-24 text-sm pr-10"
-                />
-                {/* Pin Icon for File Attachment */}
-                <input
-                  type="file"
-                  id="file-upload"
-                  key={`file-input-${uploadedFiles.length}`}
-                  multiple
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="absolute bottom-3 left-3 cursor-pointer text-gray-500 hover:text-blue-600 transition-colors"
-                  title="Attach files"
-                >
-                  <Paperclip className="w-5 h-5" />
-                </label>
-              </div>
-            </div>
-
-            {/* Uploaded Files */}
-            {uploadedFiles.length > 0 && (
-              <div className="space-y-2 bg-green-50 border border-green-200 rounded-lg p-3">
-                <p className="text-xs font-semibold text-green-900">
-                  ✓ Attached Files ({uploadedFiles.length})
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {uploadedFiles.map((file, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 bg-white px-2 py-1 rounded border border-green-200 text-xs"
-                    >
-                      <FileText className="w-3 h-3 text-green-600" />
-                      <span className="text-gray-700 truncate max-w-[150px]">
-                        {file.name}
-                      </span>
-                      <button
-                        onClick={() => removeFile(index)}
-                        className="text-gray-400 hover:text-red-600"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Campaign Context */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
               <p className="text-xs text-blue-800">
@@ -296,24 +237,18 @@ ${campaignName}`,
               </p>
             </div>
 
-            {/* Generate Button */}
-            <Button
-              onClick={generateEmails}
-              disabled={!productDescription.trim() || isGenerating}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-10 gap-2"
-            >
-              {isGenerating ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Generating Emails...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-4 h-4" />
-                  Generate Email
-                </>
-              )}
-            </Button>
+            {/* ChatGPT-like Input */}
+            <ChatGPTLikeInput
+              value={productDescription}
+              onChange={setProductDescription}
+              onSubmit={generateEmails}
+              uploadedFiles={uploadedFiles}
+              onFileUpload={handleFileUpload}
+              onRemoveFile={removeFile}
+              isLoading={isGenerating}
+              disabled={false}
+              placeholder="Describe your product or service in detail. Include key features, benefits, and unique value propositions..."
+            />
           </div>
 
           {/* GENERATED EMAILS SECTION - TABS */}
