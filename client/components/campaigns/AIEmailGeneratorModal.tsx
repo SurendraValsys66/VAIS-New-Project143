@@ -349,7 +349,7 @@ ${campaignName}`,
             </Button>
           </div>
 
-          {/* GENERATED EMAILS SECTION */}
+          {/* GENERATED EMAILS SECTION - TABS */}
           {generatedEmails.length > 0 && (
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">
@@ -360,8 +360,21 @@ ${campaignName}`,
                 entire email.
               </p>
 
-              {/* Email Modes Grid */}
-              <div className="grid grid-cols-1 gap-4">
+              <Tabs defaultValue="professional" className="w-full">
+                {/* Tabs List */}
+                <TabsList className="grid w-full grid-cols-3 bg-gray-100 p-1 rounded-lg">
+                  <TabsTrigger value="professional" className="text-sm font-medium">
+                    Professional
+                  </TabsTrigger>
+                  <TabsTrigger value="friendly" className="text-sm font-medium">
+                    Friendly
+                  </TabsTrigger>
+                  <TabsTrigger value="data-driven" className="text-sm font-medium">
+                    Data-Driven
+                  </TabsTrigger>
+                </TabsList>
+
+                {/* Tabs Content */}
                 {generatedEmails.map((emailMode) => {
                   const editingEmail = editingEmails[emailMode.id];
                   const modeColors: {
@@ -384,93 +397,103 @@ ${campaignName}`,
                   const colors = modeColors[emailMode.id];
 
                   return (
-                    <div
+                    <TabsContent
                       key={emailMode.id}
-                      className={cn(
-                        "border-2 rounded-lg overflow-hidden",
-                        colors.border
-                      )}
+                      value={emailMode.id}
+                      className="mt-4"
                     >
-                      {/* Header */}
-                      <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-                        <div>
-                          <div className={cn("inline-block px-2 py-1 rounded text-xs font-medium mb-2", colors.badge)}>
-                            {emailMode.title}
+                      <div
+                        className={cn(
+                          "border-2 rounded-lg overflow-hidden",
+                          colors.border
+                        )}
+                      >
+                        {/* Header */}
+                        <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                          <div>
+                            <div
+                              className={cn(
+                                "inline-block px-2 py-1 rounded text-xs font-medium mb-2",
+                                colors.badge
+                              )}
+                            >
+                              {emailMode.title}
+                            </div>
+                            <p className="text-xs text-gray-600">
+                              {emailMode.description}
+                            </p>
                           </div>
-                          <p className="text-xs text-gray-600">
-                            {emailMode.description}
-                          </p>
-                        </div>
-                        <Button
-                          onClick={() => copyEmail(emailMode.id)}
-                          size="sm"
-                          variant={
-                            copiedId === emailMode.id ? "default" : "outline"
-                          }
-                          className={cn(
-                            "gap-1 ml-2",
-                            copiedId === emailMode.id
-                              ? "bg-green-600 hover:bg-green-700"
-                              : ""
-                          )}
-                        >
-                          {copiedId === emailMode.id ? (
-                            <>
-                              <Check className="w-3 h-3" />
-                              Copied
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3 h-3" />
-                              Copy
-                            </>
-                          )}
-                        </Button>
-                      </div>
-
-                      {/* Email Content */}
-                      <div className="p-4 space-y-3">
-                        {/* Subject */}
-                        <div>
-                          <p className="text-xs font-semibold text-gray-600 mb-1">
-                            SUBJECT
-                          </p>
-                          <input
-                            type="text"
-                            value={editingEmail?.subject || ""}
-                            onChange={(e) =>
-                              updateEmailField(
-                                emailMode.id,
-                                "subject",
-                                e.target.value
-                              )
+                          <Button
+                            onClick={() => copyEmail(emailMode.id)}
+                            size="sm"
+                            variant={
+                              copiedId === emailMode.id ? "default" : "outline"
                             }
-                            className="w-full text-sm font-medium text-gray-900 border-0 bg-transparent focus:outline-none border-b-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 pb-1"
-                          />
+                            className={cn(
+                              "gap-1 ml-2",
+                              copiedId === emailMode.id
+                                ? "bg-green-600 hover:bg-green-700"
+                                : ""
+                            )}
+                          >
+                            {copiedId === emailMode.id ? (
+                              <>
+                                <Check className="w-3 h-3" />
+                                Copied
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3 h-3" />
+                                Copy
+                              </>
+                            )}
+                          </Button>
                         </div>
 
-                        {/* Body */}
-                        <div>
-                          <p className="text-xs font-semibold text-gray-600 mb-1">
-                            MESSAGE
-                          </p>
-                          <Textarea
-                            value={editingEmail?.body || ""}
-                            onChange={(e) =>
-                              updateEmailField(
-                                emailMode.id,
-                                "body",
-                                e.target.value
-                              )
-                            }
-                            className="min-h-32 text-sm resize-none border border-gray-200 rounded focus:border-blue-500"
-                          />
+                        {/* Email Content */}
+                        <div className="p-4 space-y-3">
+                          {/* Subject */}
+                          <div>
+                            <p className="text-xs font-semibold text-gray-600 mb-1">
+                              SUBJECT
+                            </p>
+                            <input
+                              type="text"
+                              value={editingEmail?.subject || ""}
+                              onChange={(e) =>
+                                updateEmailField(
+                                  emailMode.id,
+                                  "subject",
+                                  e.target.value
+                                )
+                              }
+                              className="w-full text-sm font-medium text-gray-900 border-0 bg-transparent focus:outline-none border-b-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 pb-1"
+                            />
+                          </div>
+
+                          {/* Body */}
+                          <div>
+                            <p className="text-xs font-semibold text-gray-600 mb-1">
+                              MESSAGE
+                            </p>
+                            <Textarea
+                              value={editingEmail?.body || ""}
+                              onChange={(e) =>
+                                updateEmailField(
+                                  emailMode.id,
+                                  "body",
+                                  e.target.value
+                                )
+                              }
+                              className="min-h-32 text-sm resize-none border border-gray-200 rounded focus:border-blue-500"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </TabsContent>
                   );
                 })}
-              </div>
+              </Tabs>
             </div>
           )}
         </div>
