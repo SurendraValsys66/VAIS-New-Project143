@@ -61,6 +61,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { AssetSelector, SelectedAsset } from "../campaigns/AssetSelector";
+import { AIEmailGeneratorModal } from "../campaigns/AIEmailGeneratorModal";
 
 // Form validation schema
 const campaignFormSchema = z.object({
