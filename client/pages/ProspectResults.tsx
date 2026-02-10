@@ -612,23 +612,10 @@ export default function ProspectResults() {
       const exists = prev.includes(id);
       const next = exists ? prev.filter((x) => x !== id) : [...prev, id];
 
-      if (!exists) {
-        // When adding to favorites, show a toast with action to view
-        toast({
-          title: "Added to favorites",
-          description: name ? `${name}` : undefined,
-          action: {
-            label: "View",
-            onClick: () => navigate("/favorites-prospects"),
-          },
-        });
-      } else {
-        // When removing from favorites
-        toast({
-          title: "Removed from favorites",
-          description: name ? `${name}` : undefined,
-        });
-      }
+      toast({
+        title: exists ? "Removed from favorites" : "Added to favorites",
+        description: name ? `${name}` : undefined,
+      });
       return next;
     });
   };
