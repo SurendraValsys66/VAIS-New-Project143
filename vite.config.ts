@@ -15,6 +15,27 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
+    target: "esnext",
+    minify: "esbuild",
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // Vendor chunks
+          if (id.includes("node_modules")) {
+            if (id.includes("react")) return "react-vendor";
+            if (id.includes("radix-ui")) return "radix-vendor";
+            if (id.includes("@tanstack")) return "tanstack-vendor";
+            if (id.includes("chart")) return "chart-vendor";
+            return "vendor";
+          }
+        },
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash][extname]",
+      },
+    },
+    chunkSizeWarningLimit: 2000,
   },
   plugins: [react(), expressPlugin()],
   resolve: {
