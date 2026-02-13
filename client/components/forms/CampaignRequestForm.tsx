@@ -64,6 +64,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { AssetSelector, SelectedAsset } from "../campaigns/AssetSelector";
 import { AIEmailGeneratorModal } from "../campaigns/AIEmailGeneratorModal";
+import RecommendedCampaignType from "../campaigns/RecommendedCampaignType";
 
 // Form validation schema
 const campaignFormSchema = z.object({
@@ -77,9 +78,6 @@ const campaignFormSchema = z.object({
   employeeSize: z
     .array(z.string())
     .min(1, "At least one employee size is required"),
-  revenue: z
-    .array(z.string())
-    .min(1, "At least one revenue option is required"),
   industries: z.array(z.string()).min(1, "At least one industry is required"),
   talFile: z.any().optional(),
   campaignAssets: z.array(z.any()).optional().default([]),
@@ -142,16 +140,6 @@ const employeeSizeOptions = [
   "501-1000",
   "1001-5000",
   "5000+",
-];
-
-const revenueOptions = [
-  "Under $1M",
-  "$1M - $10M",
-  "$10M - $50M",
-  "$50M - $100M",
-  "$100M - $500M",
-  "$500M - $1B",
-  "Over $1B",
 ];
 
 const industryOptions = [
@@ -406,9 +394,9 @@ interface DeliverablesDialogProps {
   industries: string[];
   campaignName: string;
   employeeSize: string[];
-  revenue: string[];
   userHasFullPermission?: boolean;
   isFormValid?: boolean;
+  selectedAssets?: SelectedAsset[];
 }
 
 type CampaignStatus = "pending" | "accepted" | "declined";
@@ -421,9 +409,9 @@ function DeliverablesDialog({
   industries,
   campaignName,
   employeeSize,
-  revenue,
   userHasFullPermission = true,
   isFormValid = true,
+  selectedAssets = [],
 }: DeliverablesDialogProps) {
   const [open, setOpen] = useState(false);
   const [campaignStatus, setCampaignStatus] =
@@ -817,6 +805,18 @@ function DeliverablesDialog({
             </TabsContent>
           </Tabs>
 
+          {/* Recommended Campaign Type Section */}
+          <RecommendedCampaignType
+            jobTitles={jobTitles}
+            jobFunctions={jobFunctions}
+            jobLevels={jobLevels}
+            geolocations={geolocations}
+            employeeSize={employeeSize}
+            industries={industries}
+            totalDeliverables={totalDeliverables}
+            campaignAssets={selectedAssets}
+          />
+
           {/* Campaign Actions */}
           {userHasFullPermission && (
             <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg p-6 border border-amber-200">
@@ -977,7 +977,6 @@ export default function CampaignRequestForm() {
       jobLevels: [],
       geolocations: [],
       employeeSize: [],
-      revenue: [],
       industries: [],
       campaignAssets: [],
     },
@@ -998,8 +997,7 @@ export default function CampaignRequestForm() {
       values.jobLevels?.length > 0 &&
       values.geolocations?.length > 0 &&
       values.industries?.length > 0 &&
-      values.employeeSize?.length > 0 &&
-      values.revenue?.length > 0
+      values.employeeSize?.length > 0
     );
   };
 
@@ -1020,7 +1018,7 @@ export default function CampaignRequestForm() {
                 </h3>
               </div>
               <p className="text-xs text-gray-600 mb-4">
-                Campaign name, company size & revenue
+                Campaign name and company size
               </p>
 
               <div className="space-y-4">
@@ -1067,28 +1065,6 @@ export default function CampaignRequestForm() {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="revenue"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-xs font-medium">
-                        Revenue *
-                      </FormLabel>
-                      <FormControl>
-                        <MultiSelect
-                          options={revenueOptions}
-                          selected={field.value}
-                          onSelectedChange={field.onChange}
-                          placeholder="Select revenue ranges"
-                          searchPlaceholder="Search..."
-                          showSelectAll={true}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
               </div>
             </div>
 
@@ -1264,8 +1240,8 @@ export default function CampaignRequestForm() {
                   industries={form.watch("industries")}
                   campaignName={form.watch("campaignName")}
                   employeeSize={form.watch("employeeSize")}
-                  revenue={form.watch("revenue")}
                   isFormValid={isFormValid()}
+                  selectedAssets={selectedAssets}
                 />
               </div>
 

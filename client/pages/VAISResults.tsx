@@ -1410,7 +1410,7 @@ export default function VAISResults() {
         {/* Slide-in Details Panel */}
         <div
           className={cn(
-            "fixed inset-0 z-50",
+            "fixed inset-0 z-50 overflow-hidden",
             detailsOpen ? "pointer-events-auto" : "pointer-events-none",
           )}
         >
@@ -1423,8 +1423,8 @@ export default function VAISResults() {
           />
           <div
             className={cn(
-              "absolute right-0 top-0 h-full w-[60%] bg-white shadow-xl transition-transform duration-300",
-              detailsOpen ? "translate-x-0" : "translate-x-full",
+              "absolute right-0 top-0 h-full w-[60%] bg-white transition-transform duration-300 overflow-hidden",
+              detailsOpen ? "translate-x-0 shadow-xl" : "translate-x-full",
             )}
           >
             <div className="h-full overflow-auto flex flex-col">

@@ -13,6 +13,9 @@ import {
   Sparkles,
   Download,
   Check,
+  ChevronRight,
+  Users,
+  Globe,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import IntentSignalModal from "./IntentSignalModal";
@@ -49,6 +52,14 @@ interface IntentSignalPopoverProps {
   children: React.ReactNode;
   itemId?: string;
   onAddToList?: (itemId: string, checked: boolean) => void;
+}
+
+interface TopicDataItem {
+  name: string;
+  score: number;
+  personas: string[];
+  metros: string[];
+  domains: string[];
 }
 
 const chartConfig = {
@@ -131,9 +142,10 @@ export default function IntentSignalPopover({
 }: IntentSignalPopoverProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState<string | undefined>();
+  const [selectedTopic, setSelectedTopic] = useState<string | undefined>(data.relatedTopics[0]);
   const chartData = generateChartData(data, selectedTopic);
   const [isAdded, setIsAdded] = useState(false);
+  const [expandedTopics, setExpandedTopics] = useState<Set<number>>(new Set([0]));
 
   const handleChartClick = () => {
     setIsPanelOpen(false);
@@ -514,75 +526,192 @@ export default function IntentSignalPopover({
             {/* Scrollable Content Section */}
             <div className="flex-1 overflow-auto p-5">
               <div className="space-y-6">
-                {/* Topics Section */}
+                {/* Topics Section - Compact Expandable List */}
                 <div>
-                  <h3 className="text-sm font-bold text-gray-900 mb-2.5 flex items-center space-x-2">
+                  <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center space-x-2">
                     <div className="w-1 h-4 bg-gradient-to-b from-valasys-orange to-orange-500 rounded-full"></div>
                     <span>Top Topics</span>
-                    <span className="text-xs font-normal text-gray-500">
-                      (Click to view specific intent trend)
+                    <span className="text-xs font-normal text-gray-500 ml-auto">
+                      Click to expand
                     </span>
                   </h3>
-                  <div className="space-y-1.5">
+
+                  {/* Topics List */}
+                  <div className="space-y-2">
                     {data.relatedTopics.slice(0, 3).map((topic, index) => {
-                      const scores = [65, 63, 58];
-                      const score =
-                        scores[index] || Math.floor(Math.random() * 40 + 60);
-                      const growthTrends = ["+24%", "+18%", "+12%"];
+                      const topicsData: TopicDataItem[] = [
+                        {
+                          name: "Fair Value Measurement",
+                          score: 61,
+                          personas: ["CFO", "Controller", "Accounting Manager"],
+                          metros: ["New York, NY", "San Francisco, CA", "Chicago, IL"],
+                          domains: ["Financial Services", "Accounting", "Audit"],
+                        },
+                        {
+                          name: "Goodwill Accounting",
+                          score: 73,
+                          personas: ["Financial Analyst", "M&A Manager", "Auditor"],
+                          metros: ["Boston, MA", "Los Angeles, CA", "Dallas, TX"],
+                          domains: ["Banking", "Private Equity", "Consulting"],
+                        },
+                        {
+                          name: "Revenue Recognition",
+                          score: 58,
+                          personas: ["Revenue Analyst", "Compliance Officer", "CFO"],
+                          metros: ["Seattle, WA", "Denver, CO", "Austin, TX"],
+                          domains: ["SaaS", "Technology", "Software"],
+                        },
+                      ];
+
+                      const currentTopic = topicsData[index] || {
+                        name: topic,
+                        score: Math.floor(Math.random() * 40 + 60),
+                        personas: ["Manager", "Analyst"],
+                        metros: ["New York, NY"],
+                        domains: ["Technology"],
+                      };
+
+                      const isExpanded = expandedTopics.has(index);
                       const isSelected = selectedTopic === topic;
+
+                      const getScoreBadgeColor = (score: number) => {
+                        if (score >= 70) return "bg-green-100 text-green-800";
+                        if (score >= 50) return "bg-yellow-100 text-yellow-800";
+                        return "bg-red-100 text-red-800";
+                      };
+
+                      const toggleExpand = () => {
+                        const newExpanded = new Set<number>();
+
+                        // If clicking the already expanded topic, collapse it
+                        if (expandedTopics.has(index)) {
+                          setExpandedTopics(newExpanded);
+                          setSelectedTopic(undefined);
+                        } else {
+                          // Open only this topic
+                          newExpanded.add(index);
+                          setExpandedTopics(newExpanded);
+                          setSelectedTopic(topic); // Auto-select when expanding
+                        }
+                      };
+
                       return (
                         <div
                           key={index}
-                          onClick={() =>
-                            setSelectedTopic(isSelected ? undefined : topic)
-                          }
-                          className={cn(
-                            "flex items-center justify-between p-2.5 border rounded-lg transition-all duration-300 group cursor-pointer",
-                            isSelected
-                              ? "bg-orange-50 border-valasys-orange bg-gradient-to-r from-orange-50 to-orange-100 shadow-md"
-                              : "bg-gray-50 border-gray-200 hover:border-valasys-orange hover:bg-orange-50",
-                          )}
+                          className="border border-gray-200 rounded-lg overflow-hidden transition-all duration-200 bg-white hover:border-valasys-orange hover:shadow-md"
                         >
-                          <div className="flex items-center space-x-2 flex-1 min-w-0">
-                            <div
-                              className={cn(
-                                "w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all",
-                                isSelected
-                                  ? "bg-valasys-orange w-2 h-2"
-                                  : "bg-valasys-orange",
-                              )}
-                            ></div>
-                            <span
-                              className={cn(
-                                "text-xs font-medium truncate transition-colors",
-                                isSelected
-                                  ? "text-valasys-orange font-semibold"
-                                  : "text-gray-700",
-                              )}
-                            >
-                              {topic}
-                            </span>
-                            {isSelected && (
-                              <span className="text-xs text-valasys-orange ml-1">
-                                ✓
-                              </span>
+                          {/* Header */}
+                          <button
+                            onClick={toggleExpand}
+                            className={cn(
+                              "w-full px-4 py-3 flex items-center justify-between transition-all group",
+                              isSelected ? "bg-orange-50 hover:bg-orange-100" : "hover:bg-gray-50"
                             )}
-                          </div>
-                          <div className="flex items-center space-x-2 flex-shrink-0 ml-2">
-                            <Badge
-                              className={cn(
-                                "font-semibold text-xs px-2 transition-colors",
-                                isSelected
-                                  ? "bg-valasys-orange text-white border border-valasys-orange"
-                                  : "bg-yellow-100 text-yellow-800 border border-yellow-200",
+                          >
+                            <div className="flex items-center gap-3 flex-1 text-left">
+                              {/* Score Badge */}
+                              <Badge className={cn("font-bold text-xs flex-shrink-0", getScoreBadgeColor(currentTopic.score))}>
+                                {currentTopic.score}
+                              </Badge>
+
+                              {/* Topic Name */}
+                              <div className="flex-1 min-w-0">
+                                <h4 className={cn(
+                                  "text-sm font-semibold transition-colors",
+                                  isSelected
+                                    ? "text-valasys-orange"
+                                    : "text-gray-900 group-hover:text-valasys-orange"
+                                )}>
+                                  {currentTopic.name}
+                                </h4>
+                              </div>
+
+                              {/* Selected Indicator */}
+                              {isSelected && (
+                                <div className="flex items-center gap-1.5 text-xs text-valasys-orange font-semibold flex-shrink-0 ml-2">
+                                  <div className="w-1.5 h-1.5 bg-valasys-orange rounded-full animate-pulse" />
+                                  Active
+                                </div>
                               )}
-                            >
-                              {score}
-                            </Badge>
-                            <span className="text-xs font-semibold text-emerald-600 w-10 text-right">
-                              {growthTrends[index]}
-                            </span>
-                          </div>
+                            </div>
+
+                            {/* Expand/Collapse Icon */}
+                            <div className="flex-shrink-0 ml-2">
+                              <div className={cn(
+                                "w-5 h-5 flex items-center justify-center rounded-full transition-all",
+                                isSelected
+                                  ? "bg-valasys-orange/20"
+                                  : "bg-gray-100 group-hover:bg-orange-50"
+                              )}>
+                                <ChevronRight className={cn(
+                                  "w-4 h-4 transition-all",
+                                  isSelected
+                                    ? "text-valasys-orange"
+                                    : "text-gray-600 group-hover:text-valasys-orange",
+                                  isExpanded && "rotate-90"
+                                )} />
+                              </div>
+                            </div>
+                          </button>
+
+                          {/* Expandable Content */}
+                          {isExpanded && (
+                            <div className="border-t border-gray-100 bg-gradient-to-br from-gray-50 to-white p-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+
+                              {/* B2B Personas */}
+                              <div>
+                                <p className="text-xs font-semibold text-gray-600 mb-2 flex items-center gap-1.5">
+                                  <Users className="w-3.5 h-3.5 text-blue-600" />
+                                  B2B Personas
+                                </p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {currentTopic.personas.map((persona, i) => (
+                                    <Badge key={i} variant="secondary" className="bg-blue-100 text-blue-800 text-xs font-normal">
+                                      {persona}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Top Metros */}
+                              <div>
+                                <p className="text-xs font-semibold text-gray-600 mb-2 flex items-center gap-1.5">
+                                  <MapPin className="w-3.5 h-3.5 text-green-600" />
+                                  Top Metros
+                                </p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {currentTopic.metros.map((metro, i) => (
+                                    <Badge key={i} variant="secondary" className="bg-green-100 text-green-800 text-xs font-normal">
+                                      {metro}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Domain Origin */}
+                              <div>
+                                <p className="text-xs font-semibold text-gray-600 mb-2 flex items-center gap-1.5">
+                                  <Globe className="w-3.5 h-3.5 text-purple-600" />
+                                  Domain Origin
+                                </p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {currentTopic.domains.map((domain, i) => (
+                                    <Badge key={i} variant="secondary" className="bg-purple-100 text-purple-800 text-xs font-normal">
+                                      {domain}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Status Indicator */}
+                              <div className="border-t border-gray-200 pt-3">
+                                <div className="flex items-center gap-2 text-xs text-valasys-orange font-medium">
+                                  <div className="w-2 h-2 bg-valasys-orange rounded-full animate-pulse" />
+                                  Intent Trend Showing
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       );
                     })}
