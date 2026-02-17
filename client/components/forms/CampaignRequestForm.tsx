@@ -68,7 +68,12 @@ import {
   DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { AssetSelector, SelectedAsset } from "../campaigns/AssetSelector";
 import { AIEmailGeneratorModal } from "../campaigns/AIEmailGeneratorModal";
@@ -624,174 +629,146 @@ function DeliverablesDialog({
         </SheetHeader>
 
         <div className="space-y-6 py-4">
-          {/* Deliverables Overview Tables */}
-          <div className="space-y-8">
-            {/* Monthly Deliverables */}
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-              <div className="bg-[#fde9d9] px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
-                    Monthly Deliverables
-                  </h4>
-                  <p className="text-[10px] text-gray-600 font-medium">ESTIMATED MONTHLY DELIVERY VOLUME</p>
-                </div>
-                <div className="flex gap-2">
-                  <Badge variant="outline" className="bg-white/50 border-orange-200 text-orange-800 text-[10px] font-bold">
-                    PREMIUM PLAN
-                  </Badge>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-orange-600">
-                    <Download className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"></th>
-                      {deliverableColumns.map((col) => (
-                        <th
-                          key={col}
-                          className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"
-                        >
-                          {col}
-                        </th>
-                      ))}
-                      <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-[#fde9d9] uppercase tracking-wider">
-                        Total
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {Object.keys(monthlyDeliverablesData).map((type) => (
-                      <tr key={type} className="hover:bg-orange-50/30 transition-colors group">
-                        <td className="px-6 py-3 text-sm font-bold text-gray-900 bg-[#fde9d9] border-r border-gray-200 min-w-[120px]">
-                          {type}
-                        </td>
-                        {deliverableColumns.map((col) => (
-                          <td
-                            key={col}
-                            className="px-6 py-3 text-sm text-center text-gray-600 border-r border-gray-100 group-hover:text-gray-900"
-                          >
-                            {monthlyDeliverablesData[type][col].toLocaleString()}
-                          </td>
-                        ))}
-                        <td className="px-6 py-3 text-sm text-center font-bold text-gray-900 bg-gray-50">
-                          {getRowTotal(monthlyDeliverablesData[type]).toLocaleString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Quarterly Deliverables */}
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-              <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-                <div>
+          <Accordion type="single" collapsible defaultValue="item-1" className="w-full space-y-4">
+            {/* 1) Quarterly Deliverables */}
+            <AccordionItem value="item-1" className="border rounded-lg overflow-hidden shadow-sm bg-white">
+              <AccordionTrigger className="bg-gray-50 px-6 py-4 hover:no-underline hover:bg-gray-100 transition-colors">
+                <div className="flex flex-col items-start text-left">
                   <h4 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
                     Quarterly Deliverables
                   </h4>
                   <p className="text-[10px] text-gray-600 font-medium">ESTIMATED 3-MONTH DELIVERY VOLUME</p>
                 </div>
-                <div className="flex gap-2">
-                  <Badge variant="outline" className="bg-blue-50 border-blue-200 text-blue-800 text-[10px] font-bold uppercase">
-                    Quarterly Projection
-                  </Badge>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-blue-600">
-                    <Download className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"></th>
-                      {deliverableColumns.map((col) => (
-                        <th
-                          key={col}
-                          className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"
-                        >
-                          {col}
-                        </th>
-                      ))}
-                      <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider">
-                        Total
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {Object.keys(monthlyDeliverablesData).map((type) => (
-                      <tr key={type} className="hover:bg-blue-50/30 transition-colors group">
-                        <td className="px-6 py-3 text-sm font-bold text-gray-900 bg-[#fde9d9] border-r border-gray-200 min-w-[120px]">
-                          {type}
-                        </td>
+              </AccordionTrigger>
+              <AccordionContent className="p-0">
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"></th>
                         {deliverableColumns.map((col) => (
-                          <td
+                          <th
                             key={col}
-                            className="px-6 py-3 text-sm text-center text-gray-600 border-r border-gray-100 group-hover:text-gray-900"
+                            className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"
                           >
+                            {col}
+                          </th>
+                        ))}
+                        <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider">
+                          Total
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {Object.keys(monthlyDeliverablesData).map((type) => (
+                        <tr key={type} className="hover:bg-blue-50/30 transition-colors group">
+                          <td className="px-6 py-3 text-sm font-bold text-gray-900 bg-[#fde9d9] border-r border-gray-200 min-w-[120px]">
+                            {type}
+                          </td>
+                          {deliverableColumns.map((col) => (
+                            <td
+                              key={col}
+                              className="px-6 py-3 text-sm text-center text-gray-600 border-r border-gray-100 group-hover:text-gray-900"
+                            >
+                              {(
+                                monthlyDeliverablesData[type][col] * 3
+                              ).toLocaleString()}
+                            </td>
+                          ))}
+                          <td className="px-6 py-3 text-sm text-center font-bold text-gray-900 bg-gray-50">
                             {(
-                              monthlyDeliverablesData[type][col] * 3
+                              getRowTotal(monthlyDeliverablesData[type]) * 3
                             ).toLocaleString()}
                           </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* 2) Monthly Deliverables */}
+            <AccordionItem value="item-2" className="border rounded-lg overflow-hidden shadow-sm bg-white">
+              <AccordionTrigger className="bg-[#fde9d9] px-6 py-4 hover:no-underline hover:bg-[#fbd3b0] transition-colors">
+                <div className="flex flex-col items-start text-left">
+                  <h4 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
+                    Monthly Deliverables
+                  </h4>
+                  <p className="text-[10px] text-gray-600 font-medium">ESTIMATED MONTHLY DELIVERY VOLUME</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-0">
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"></th>
+                        {deliverableColumns.map((col) => (
+                          <th
+                            key={col}
+                            className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"
+                          >
+                            {col}
+                          </th>
                         ))}
-                        <td className="px-6 py-3 text-sm text-center font-bold text-gray-900 bg-gray-50">
-                          {(
-                            getRowTotal(monthlyDeliverablesData[type]) * 3
-                          ).toLocaleString()}
-                        </td>
+                        <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-[#fde9d9] uppercase tracking-wider">
+                          Total
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {Object.keys(monthlyDeliverablesData).map((type) => (
+                        <tr key={type} className="hover:bg-orange-50/30 transition-colors group">
+                          <td className="px-6 py-3 text-sm font-bold text-gray-900 bg-[#fde9d9] border-r border-gray-200 min-w-[120px]">
+                            {type}
+                          </td>
+                          {deliverableColumns.map((col) => (
+                            <td
+                              key={col}
+                              className="px-6 py-3 text-sm text-center text-gray-600 border-r border-gray-100 group-hover:text-gray-900"
+                            >
+                              {monthlyDeliverablesData[type][col].toLocaleString()}
+                            </td>
+                          ))}
+                          <td className="px-6 py-3 text-sm text-center font-bold text-gray-900 bg-gray-50">
+                            {getRowTotal(monthlyDeliverablesData[type]).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Database Reach Tabs */}
-          <Tabs defaultValue="job-level" className="w-full mt-8 pt-8 border-t border-gray-100">
-            <TabsList className="grid w-full grid-cols-2 bg-gray-100 p-1 rounded-lg">
-              <TabsTrigger value="job-level" className="text-sm font-medium">
-                Job Level (Total count {jobLevelTotal})
-              </TabsTrigger>
-              <TabsTrigger
-                value="employee-size"
-                className="text-sm font-medium"
-              >
-                Employee Size (Total count {employeeSizeTotal})
-              </TabsTrigger>
-            </TabsList>
-
-            {/* Job Level Tab */}
-            <TabsContent value="job-level" className="mt-4">
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                <div className="bg-gradient-to-r from-blue-50 to-blue-100 px-6 py-4 border-b border-gray-200">
-                  <h4 className="text-sm font-bold text-gray-900">
+            {/* 3) Database Reach by Job Level */}
+            <AccordionItem value="item-3" className="border rounded-lg overflow-hidden shadow-sm bg-white">
+              <AccordionTrigger className="bg-blue-50 px-6 py-4 hover:no-underline hover:bg-blue-100 transition-colors">
+                <div className="flex flex-col items-start text-left">
+                  <h4 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
                     Database Reach by Job Level
                   </h4>
-                  <p className="text-xs text-gray-600 mt-1">
-                    Prospect counts distributed across selected geographies
-                  </p>
+                  <p className="text-[10px] text-gray-600 font-medium">Total count: {jobLevelTotal.toLocaleString()}</p>
                 </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-0">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-gray-200">
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50">
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider">
                           Job Level
                         </th>
                         {selectedGeolocations.map((geo) => (
                           <th
                             key={geo}
-                            className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-gray-50"
+                            className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider"
                           >
                             {geo}
                           </th>
                         ))}
-                        <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-blue-50 font-bold">
+                        <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-blue-50 uppercase tracking-wider">
                           Total
                         </th>
                       </tr>
@@ -819,64 +796,44 @@ function DeliverablesDialog({
                               </td>
                             ))}
                             <td className="px-6 py-3 text-sm text-center font-bold text-blue-600">
-                              {levelTotal}
+                              {levelTotal.toLocaleString()}
                             </td>
                           </tr>
                         );
                       })}
-                      <tr className="bg-gradient-to-r from-blue-100 to-blue-50 border-t-2 border-blue-200 font-bold">
-                        <td className="px-6 py-3 text-sm text-gray-900">
-                          Total
-                        </td>
-                        {selectedGeolocations.map((geo) => (
-                          <td
-                            key={geo}
-                            className="px-6 py-3 text-sm text-center text-gray-900"
-                          >
-                            {selectedJobLevels.reduce(
-                              (sum, level) =>
-                                sum + (jobLevelData[level]?.[geo] || 0),
-                              0,
-                            )}
-                          </td>
-                        ))}
-                        <td className="px-6 py-3 text-sm text-center text-blue-700">
-                          {jobLevelTotal}
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
-              </div>
-            </TabsContent>
+              </AccordionContent>
+            </AccordionItem>
 
-            {/* Employee Size Tab */}
-            <TabsContent value="employee-size" className="mt-4">
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 px-6 py-4 border-b border-gray-200">
-                  <h4 className="text-sm font-bold text-gray-900">
+            {/* 4) Database Reach by Employee Size */}
+            <AccordionItem value="item-4" className="border rounded-lg overflow-hidden shadow-sm bg-white">
+              <AccordionTrigger className="bg-emerald-50 px-6 py-4 hover:no-underline hover:bg-emerald-100 transition-colors">
+                <div className="flex flex-col items-start text-left">
+                  <h4 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
                     Database Reach by Employee Size
                   </h4>
-                  <p className="text-xs text-gray-600 mt-1">
-                    Prospect counts by company size across selected geographies
-                  </p>
+                  <p className="text-[10px] text-gray-600 font-medium">Total count: {employeeSizeTotal.toLocaleString()}</p>
                 </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-0">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-gray-200">
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50">
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider">
                           Employee Size
                         </th>
                         {selectedGeolocations.map((geo) => (
                           <th
                             key={geo}
-                            className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-gray-50"
+                            className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider"
                           >
                             {geo}
                           </th>
                         ))}
-                        <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 bg-emerald-50 font-bold">
+                        <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-emerald-50 uppercase tracking-wider">
                           Total
                         </th>
                       </tr>
@@ -905,37 +862,17 @@ function DeliverablesDialog({
                               </td>
                             ))}
                             <td className="px-6 py-3 text-sm text-center font-bold text-emerald-600">
-                              {sizeTotal}
+                              {sizeTotal.toLocaleString()}
                             </td>
                           </tr>
                         );
                       })}
-                      <tr className="bg-gradient-to-r from-emerald-100 to-emerald-50 border-t-2 border-emerald-200 font-bold">
-                        <td className="px-6 py-3 text-sm text-gray-900">
-                          Total
-                        </td>
-                        {selectedGeolocations.map((geo) => (
-                          <td
-                            key={geo}
-                            className="px-6 py-3 text-sm text-center text-gray-900"
-                          >
-                            {selectedEmployeeSizeList.reduce(
-                              (sum, size) =>
-                                sum + (employeeSizeData[size]?.[geo] || 0),
-                              0,
-                            )}
-                          </td>
-                        ))}
-                        <td className="px-6 py-3 text-sm text-center text-emerald-700">
-                          {employeeSizeTotal}
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
-              </div>
-            </TabsContent>
-          </Tabs>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           {/* Recommended Campaign Type Section */}
           <RecommendedCampaignType
