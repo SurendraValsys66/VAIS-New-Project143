@@ -59,6 +59,7 @@ import {
   SheetTitle,
   SheetDescription,
   SheetTrigger,
+  SheetClose,
 } from "@/components/ui/sheet";
 import {
   Dialog,
@@ -620,12 +621,22 @@ function DeliverablesDialog({
       <SheetContent side="right" className="w-full sm:max-w-2xl lg:max-w-4xl overflow-y-auto bg-gray-50/50 p-0">
         <div className="bg-white border-b sticky top-0 z-10 px-6 py-4 flex flex-col gap-1">
           <SheetHeader className="space-y-0">
-            <SheetTitle className="text-2xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <Target className="w-6 h-6 text-orange-600" />
-              </div>
-              Deliverables Overview
-            </SheetTitle>
+            <div className="flex items-center justify-between gap-4">
+              <SheetTitle className="text-2xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <Target className="w-6 h-6 text-orange-600" />
+                </div>
+                Deliverables Overview
+              </SheetTitle>
+              <SheetClose asChild>
+                <button
+                  className="h-8 w-8 rounded-md hover:bg-gray-100 flex items-center justify-center transition-colors"
+                  aria-label="Close panel"
+                >
+                  <X className="h-4 w-4 text-gray-600" />
+                </button>
+              </SheetClose>
+            </div>
             <SheetDescription className="text-sm text-gray-500 font-medium">
               {campaignName || "Your Campaign"} • Database Reach Analysis & Campaign Projections
             </SheetDescription>
