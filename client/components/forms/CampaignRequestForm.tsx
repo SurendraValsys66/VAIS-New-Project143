@@ -628,14 +628,27 @@ function DeliverablesDialog({
                 </div>
                 Deliverables Overview
               </SheetTitle>
-              <SheetClose asChild>
-                <button
-                  className="h-8 w-8 rounded-md hover:bg-gray-100 flex items-center justify-center transition-colors"
-                  aria-label="Close panel"
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  className="bg-orange-600 hover:bg-orange-700 text-white flex items-center gap-2"
+                  onClick={() => {
+                    // Export functionality placeholder
+                    console.log("Export data triggered");
+                  }}
                 >
-                  <X className="h-4 w-4 text-gray-600" />
-                </button>
-              </SheetClose>
+                  <Download className="w-4 h-4" />
+                  Export Data
+                </Button>
+                <SheetClose asChild>
+                  <button
+                    className="h-8 w-8 rounded-md hover:bg-gray-100 flex items-center justify-center transition-colors"
+                    aria-label="Close panel"
+                  >
+                    <X className="h-4 w-4 text-gray-600" />
+                  </button>
+                </SheetClose>
+              </div>
             </div>
             <SheetDescription className="text-sm text-gray-500 font-medium">
               {campaignName || "Your Campaign"} • Database Reach Analysis & Campaign Projections
