@@ -420,8 +420,8 @@ function DeliverablesDialog({
 
   // Region mappings
   const regionMap: { [key: string]: string } = {
-    "United States": "NAMER",
-    Canada: "NAMER",
+    "United States": "United States",
+    Canada: "Canada",
     Mexico: "LATAM",
     Brazil: "LATAM",
     "United Kingdom": "EMEA",
@@ -433,6 +433,97 @@ function DeliverablesDialog({
     Japan: "APAC",
   };
 
+  // Calculate Job Level total count (MOVED UP)
+  const jobLevelTotal = selectedJobLevels.reduce((sum, level) => {
+    const levelTotal = selectedGeolocations.reduce(
+      (geoSum, geo) => geoSum + (jobLevelData[level]?.[geo] || 0),
+      0,
+    );
+    return sum + levelTotal;
+  }, 0);
+
+  const deliverableColumns = [
+    "United States",
+    "Canada",
+    "LATAM",
+    "EMEA",
+    "APAC",
+  ];
+
+  // Calculate deliverables by region/column
+  const monthlyDeliverablesData: {
+    [key: string]: { [key: string]: number };
+  } = {
+    CS: {},
+    MQL: {},
+    HQL: {},
+    BANT: {},
+    Webinar: {},
+  };
+
+  const deliverableRatios = {
+    CS: 1.0,
+    MQL: 0.75,
+    HQL: 0.45,
+    BANT: 0.26,
+    Webinar: 0.61,
+  };
+
+  // Populate CS counts (Base Reach) based on jobLevelTotal
+  // Increase it significantly to match the image's scale
+  const baseReachTotal = Math.max(jobLevelTotal * 12, 10000);
+
+  deliverableColumns.forEach((col) => {
+    const isSelected = geolocations.some((geo) => regionMap[geo] === col);
+
+    if (isSelected) {
+      const regionWeight =
+        col === "United States"
+          ? 0.46
+          : col === "EMEA"
+            ? 0.31
+            : col === "APAC"
+              ? 0.15
+              : col === "Canada"
+                ? 0.04
+                : 0.04;
+      const variation = 0.9 + Math.random() * 0.2;
+      const count = Math.floor(baseReachTotal * regionWeight * variation);
+      monthlyDeliverablesData.CS[col] = Math.max(50, count);
+    } else {
+      monthlyDeliverablesData.CS[col] = 0;
+    }
+  });
+
+  // If no geolocations, provide exact image counts as fallback
+  if (geolocations.length === 0) {
+    monthlyDeliverablesData.CS["United States"] = 7621;
+    monthlyDeliverablesData.CS["Canada"] = 620;
+    monthlyDeliverablesData.CS["LATAM"] = 570;
+    monthlyDeliverablesData.CS["EMEA"] = 5121;
+    monthlyDeliverablesData.CS["APAC"] = 2561;
+  }
+
+  // Calculate other deliverables based on CS
+  Object.keys(deliverableRatios).forEach((type) => {
+    if (type === "CS") return;
+    const ratio = deliverableRatios[type as keyof typeof deliverableRatios];
+    deliverableColumns.forEach((col) => {
+      monthlyDeliverablesData[type][col] = Math.floor(
+        monthlyDeliverablesData.CS[col] * ratio,
+      );
+    });
+  });
+
+  const getRowTotal = (data: { [key: string]: number }) =>
+    Object.values(data).reduce((a, b) => a + b, 0);
+
+  const getColTotal = (
+    data: { [key: string]: { [key: string]: number } },
+    col: string,
+  ) => Object.keys(data).reduce((sum, type) => sum + data[type][col], 0);
+
+  // Region mappings for existing logic (keep it for other parts if needed)
   const regionInfo: {
     [key: string]: {
       color: string;
@@ -516,10 +607,8 @@ function DeliverablesDialog({
     regionDeliverables.MENA = 320;
   }
 
-  const totalDeliverables = Object.values(regionDeliverables).reduce(
-    (a, b) => a + b,
-    0,
-  );
+  const totalMonthlyCS = getRowTotal(monthlyDeliverablesData.CS);
+  const totalDeliverables = totalMonthlyCS;
 
   // Limit geolocations to top 5
   const selectedGeolocations = geolocations.slice(0, 5);
@@ -545,15 +634,6 @@ function DeliverablesDialog({
   };
 
   const jobLevelData = generateJobLevelData();
-
-  // Calculate Job Level total count
-  const jobLevelTotal = selectedJobLevels.reduce((sum, level) => {
-    const levelTotal = selectedGeolocations.reduce(
-      (geoSum, geo) => geoSum + (jobLevelData[level]?.[geo] || 0),
-      0,
-    );
-    return sum + levelTotal;
-  }, 0);
 
   // Use only selected employee sizes (no limit)
   const selectedEmployeeSizeList =
@@ -619,8 +699,135 @@ function DeliverablesDialog({
         </DialogHeader>
 
         <div className="space-y-6 py-4">
+          {/* Deliverables Overview Tables */}
+          <div className="space-y-8">
+            {/* Monthly Deliverables */}
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+              <div className="bg-[#fde9d9] px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                <div>
+                  <h4 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
+                    Monthly Deliverables
+                  </h4>
+                  <p className="text-[10px] text-gray-600 font-medium">ESTIMATED MONTHLY DELIVERY VOLUME</p>
+                </div>
+                <div className="flex gap-2">
+                  <Badge variant="outline" className="bg-white/50 border-orange-200 text-orange-800 text-[10px] font-bold">
+                    PREMIUM PLAN
+                  </Badge>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-orange-600">
+                    <Download className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"></th>
+                      {deliverableColumns.map((col) => (
+                        <th
+                          key={col}
+                          className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"
+                        >
+                          {col}
+                        </th>
+                      ))}
+                      <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-[#fde9d9] uppercase tracking-wider">
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {Object.keys(monthlyDeliverablesData).map((type) => (
+                      <tr key={type} className="hover:bg-orange-50/30 transition-colors group">
+                        <td className="px-6 py-3 text-sm font-bold text-gray-900 bg-[#fde9d9] border-r border-gray-200 min-w-[120px]">
+                          {type}
+                        </td>
+                        {deliverableColumns.map((col) => (
+                          <td
+                            key={col}
+                            className="px-6 py-3 text-sm text-center text-gray-600 border-r border-gray-100 group-hover:text-gray-900"
+                          >
+                            {monthlyDeliverablesData[type][col].toLocaleString()}
+                          </td>
+                        ))}
+                        <td className="px-6 py-3 text-sm text-center font-bold text-gray-900 bg-gray-50">
+                          {getRowTotal(monthlyDeliverablesData[type]).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Quarterly Deliverables */}
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+              <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                <div>
+                  <h4 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
+                    Quarterly Deliverables
+                  </h4>
+                  <p className="text-[10px] text-gray-600 font-medium">ESTIMATED 3-MONTH DELIVERY VOLUME</p>
+                </div>
+                <div className="flex gap-2">
+                  <Badge variant="outline" className="bg-blue-50 border-blue-200 text-blue-800 text-[10px] font-bold uppercase">
+                    Quarterly Projection
+                  </Badge>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-blue-600">
+                    <Download className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"></th>
+                      {deliverableColumns.map((col) => (
+                        <th
+                          key={col}
+                          className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider border-r border-gray-100"
+                        >
+                          {col}
+                        </th>
+                      ))}
+                      <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 bg-gray-50 uppercase tracking-wider">
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {Object.keys(monthlyDeliverablesData).map((type) => (
+                      <tr key={type} className="hover:bg-blue-50/30 transition-colors group">
+                        <td className="px-6 py-3 text-sm font-bold text-gray-900 bg-[#fde9d9] border-r border-gray-200 min-w-[120px]">
+                          {type}
+                        </td>
+                        {deliverableColumns.map((col) => (
+                          <td
+                            key={col}
+                            className="px-6 py-3 text-sm text-center text-gray-600 border-r border-gray-100 group-hover:text-gray-900"
+                          >
+                            {(
+                              monthlyDeliverablesData[type][col] * 3
+                            ).toLocaleString()}
+                          </td>
+                        ))}
+                        <td className="px-6 py-3 text-sm text-center font-bold text-gray-900 bg-gray-50">
+                          {(
+                            getRowTotal(monthlyDeliverablesData[type]) * 3
+                          ).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
           {/* Database Reach Tabs */}
-          <Tabs defaultValue="job-level" className="w-full">
+          <Tabs defaultValue="job-level" className="w-full mt-8 pt-8 border-t border-gray-100">
             <TabsList className="grid w-full grid-cols-2 bg-gray-100 p-1 rounded-lg">
               <TabsTrigger value="job-level" className="text-sm font-medium">
                 Job Level (Total count {jobLevelTotal})
