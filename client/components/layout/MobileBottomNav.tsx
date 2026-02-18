@@ -114,10 +114,10 @@ export default function MobileBottomNav() {
 
       <nav className="fixed bottom-0 left-0 right-0 lg:hidden z-40">
         <div className="relative px-4 pt-8 pb-4">
-          {/* Black Curved Bar */}
+          {/* White Curved Bar */}
           <div
             className={cn(
-              "relative bg-black/85 rounded-3xl shadow-xl backdrop-blur-sm transition-all duration-300 overflow-visible",
+              "relative bg-white rounded-3xl shadow-xl backdrop-blur-sm transition-all duration-300 overflow-visible border border-valasys-gray-100",
               isAnimating ? "mobile-nav-animate" : "",
             )}
           >
@@ -150,16 +150,16 @@ export default function MobileBottomNav() {
                     onClick={() => handleNavigation(item, index)}
                     className={cn(
                       "flex flex-col items-center justify-center flex-1 h-full py-3 px-2 rounded-2xl transition-all duration-300 relative group",
-                      active ? "text-white" : "text-gray-400 hover:text-gray-200",
+                      active ? "text-valasys-gray-700" : "text-valasys-gray-500 hover:text-valasys-gray-700",
                     )}
                     aria-current={active ? "page" : undefined}
                     title={item.name}
                   >
                     {!active && (
-                      <Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
+                      <Icon className="h-6 w-6 transition-all duration-300 group-hover:scale-110" />
                     )}
                     {!active && (
-                      <span className="text-[10px] font-medium mt-1 opacity-70 group-hover:opacity-100">
+                      <span className="text-[10px] font-medium mt-1 text-valasys-gray-500 group-hover:text-valasys-gray-700 transition-colors">
                         {item.name}
                       </span>
                     )}
